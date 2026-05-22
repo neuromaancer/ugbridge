@@ -50,10 +50,18 @@ export function AlphabetPanel() {
       </section>
 
       {selectedEntry && (
-        <AlphabetModal
-          entry={selectedEntry}
-          onClose={() => setSelectedToken(null)}
-        />
+        <>
+          <section className="sm:hidden">
+            <AlphabetDetails
+              entry={selectedEntry}
+              onClose={() => setSelectedToken(null)}
+            />
+          </section>
+          <AlphabetModal
+            entry={selectedEntry}
+            onClose={() => setSelectedToken(null)}
+          />
+        </>
       )}
     </>
   );
@@ -106,52 +114,66 @@ function AlphabetModal({
       role="dialog"
       aria-modal="true"
       aria-label={`${entry.token} alphabet examples`}
-      className="fixed inset-0 z-50 grid place-items-center bg-slate-950/40 px-4 py-6"
+      className="fixed inset-0 z-50 hidden place-items-center bg-slate-950/40 px-4 py-6 sm:grid"
       onClick={onClose}
     >
       <div
         className="max-h-[88vh] w-full max-w-2xl overflow-auto rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-2xl"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="font-mono text-2xl font-bold text-indigo-700">
-              {entry.token}
-            </div>
-            <div className="mt-1 font-mono text-sm font-semibold text-emerald-700">
-              /{ulyTokenToIpa(entry.token)}/
-            </div>
-            <div className="mt-2 rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">
-              {entry.kind}
-            </div>
-          </div>
-          <div className="flex items-start gap-4">
-            <div dir="rtl" lang="ug" className="text-6xl leading-none text-slate-950">
-              {entry.displayUey}
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close alphabet details"
-              className="rounded-full p-2 text-slate-500 transition hover:bg-white hover:text-slate-900"
-            >
-              <X className="h-4 w-4" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
+        <AlphabetDetails entry={entry} onClose={onClose} />
+      </div>
+    </div>
+  );
+}
 
-        <div className="mt-4 grid gap-2">
-          <AlphabetForms forms={entry.forms} />
-          {entry.examples.length ? (
-            entry.examples.map((example) => (
-              <AlphabetExampleRow key={example.id} example={example} />
-            ))
-          ) : (
-            <div className="rounded-md bg-white p-3 text-sm text-slate-500 ring-1 ring-slate-200">
-              More common examples needed for this letter.
-            </div>
-          )}
+function AlphabetDetails({
+  entry,
+  onClose,
+}: {
+  entry: AlphabetStudyEntry;
+  onClose: () => void;
+}) {
+  return (
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="font-mono text-2xl font-bold text-indigo-700">
+            {entry.token}
+          </div>
+          <div className="mt-1 font-mono text-sm font-semibold text-emerald-700">
+            /{ulyTokenToIpa(entry.token)}/
+          </div>
+          <div className="mt-2 w-fit rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">
+            {entry.kind}
+          </div>
         </div>
+        <div className="flex items-start gap-4">
+          <div dir="rtl" lang="ug" className="text-6xl leading-none text-slate-950">
+            {entry.displayUey}
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close alphabet details"
+            className="rounded-full p-2 text-slate-500 transition hover:bg-white hover:text-slate-900"
+          >
+            <X className="h-4 w-4" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-4 grid gap-2">
+        <AlphabetForms forms={entry.forms} />
+        {entry.examples.length ? (
+          entry.examples.map((example) => (
+            <AlphabetExampleRow key={example.id} example={example} />
+          ))
+        ) : (
+          <div className="rounded-md bg-white p-3 text-sm text-slate-500 ring-1 ring-slate-200">
+            More common examples needed for this letter.
+          </div>
+        )}
       </div>
     </div>
   );
