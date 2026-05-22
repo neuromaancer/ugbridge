@@ -27,7 +27,8 @@ Live app: <https://ugbr1dge.web.app>
   matching ULY token underneath.
 - **Dictionary**: offline Uyghur-English lookup by UEY, ULY, or English.
 - **Dictionary suggestions**: autocomplete with keyboard selection.
-- **Learn UEY**: ULY input, UEY output, IPA hints, and per-letter breakdown.
+- **Learn UEY**: local-only learning path, quick practice, ULY input, UEY
+  output, IPA hints, and per-letter breakdown.
 - **Alphabet**: all 32 UEY letters with IPA, examples, joining forms, and
   word-initial hamza vowel forms.
 - **Smart direction**: strong UEY/ULY script signals automatically switch the
