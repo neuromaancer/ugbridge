@@ -105,6 +105,7 @@ scripts/
 firebase.json
 .firebaserc
 AGENTS.md                    # project notes for agent workflows
+SECURITY.md                  # vulnerability reporting and secret handling
 ```
 
 `src/lib/` must stay pure and free of React imports. Stateful UI coordination
@@ -209,6 +210,8 @@ commercial-friendly model.
 
 Environment variables go in `.env.local` and are ignored by git. See
 [.env.example](.env.example) for the supported Firebase and TTS settings.
+See [SECURITY.md](SECURITY.md) for vulnerability reporting and secret-handling
+guidance.
 
 Firebase Web `apiKey` values are public project identifiers, not secrets.
 Real access must be protected with Firebase Security Rules and Authentication.
