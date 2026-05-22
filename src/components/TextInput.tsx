@@ -23,14 +23,14 @@ const CONFIG: Record<
     dir: 'rtl',
     lang: 'ug',
     label: 'UEY',
-    subtitle: 'Uyghur Arabic',
+    subtitle: 'Uyghur Arabic script',
     placeholder: 'ياخشىمۇسىز...',
   },
   uly: {
     dir: 'ltr',
     lang: 'en',
     label: 'ULY',
-    subtitle: 'Uyghur Latin',
+    subtitle: 'Uyghur Latin alphabet',
     placeholder: 'yaxshimusiz...',
   },
 };

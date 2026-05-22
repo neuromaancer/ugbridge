@@ -20,8 +20,18 @@ const CONFIG: Record<
   ScriptMode,
   { dir: 'rtl' | 'ltr'; lang: string; label: string; subtitle: string }
 > = {
-  uey: { dir: 'rtl', lang: 'ug', label: 'UEY', subtitle: 'Uyghur Arabic' },
-  uly: { dir: 'ltr', lang: 'en', label: 'ULY', subtitle: 'Uyghur Latin' },
+  uey: {
+    dir: 'rtl',
+    lang: 'ug',
+    label: 'UEY',
+    subtitle: 'Uyghur Arabic script',
+  },
+  uly: {
+    dir: 'ltr',
+    lang: 'en',
+    label: 'ULY',
+    subtitle: 'Uyghur Latin alphabet',
+  },
 };
 
 const HIGHLIGHT_CLASSES: Record<ConversionSegmentKind, string> = {

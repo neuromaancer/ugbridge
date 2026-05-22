@@ -12,6 +12,13 @@ Live app: <https://ugbr1dge.web.app>
 ياخشىمۇسىز  ⇄  yaxshimusiz
 ```
 
+## Terminology
+
+- **UEY** means **Uyghur Ereb Yéziqi**: the Arabic-based script commonly used
+  for Uyghur.
+- **ULY** means **Uyghur Latin Yéziqi**: a Latin-alphabet writing system for
+  Uyghur.
+
 ## Features
 
 - **Home**: overview page with quick entry points into the main tools.

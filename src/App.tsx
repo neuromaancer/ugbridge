@@ -279,8 +279,9 @@ export default function App() {
               </button>
             </div>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
-              Convert between UEY and ULY, search a Uyghur-English dictionary,
-              and study Uyghur script.
+              Convert between UEY (Uyghur Arabic script) and ULY (Uyghur Latin
+              alphabet), search a Uyghur-English dictionary, and study Uyghur
+              script.
             </p>
           </div>
 
@@ -602,9 +603,12 @@ function HomePanel({
             Convert, search, and study Uyghur across UEY and ULY.
           </h2>
           <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
-            A focused browser tool for Uyghur Arabic script conversion, ULY input,
-            dictionary lookup, alphabet forms, IPA hints, and speech playback.
+            UEY is the Uyghur Arabic-script writing system. ULY is Uyghur
+            written with the Latin alphabet. UG Bridge keeps both forms visible
+            for conversion, dictionary lookup, alphabet study, IPA hints, and
+            speech playback.
           </p>
+          <ScriptGlossary />
           <div className="mt-5 flex flex-wrap gap-2">
             <button
               type="button"
@@ -676,6 +680,25 @@ function HomePanel({
         />
       </section>
     </main>
+  );
+}
+
+function ScriptGlossary() {
+  return (
+    <dl className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
+      <div className="rounded-md border border-slate-200 bg-white px-3 py-2">
+        <dt className="font-semibold text-slate-950">UEY</dt>
+        <dd className="mt-1 leading-6 text-slate-600">
+          Uyghur Ereb Yéziqi, the Arabic-based script commonly used for Uyghur.
+        </dd>
+      </div>
+      <div className="rounded-md border border-slate-200 bg-white px-3 py-2">
+        <dt className="font-semibold text-slate-950">ULY</dt>
+        <dd className="mt-1 leading-6 text-slate-600">
+          Uyghur Latin Yéziqi, a Latin-alphabet writing system for Uyghur.
+        </dd>
+      </div>
+    </dl>
   );
 }
 
