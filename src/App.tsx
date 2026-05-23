@@ -10,6 +10,7 @@ import {
   History,
   Home,
   Languages,
+  ListChecks,
   Plus,
   Search,
   Share2,
@@ -31,6 +32,7 @@ import { TtsSettingsPanel } from './components/TtsSettingsPanel';
 import { LearnPanel } from './components/LearnPanel';
 import { AlphabetPanel } from './components/AlphabetPanel';
 import { DictionaryPanel } from './components/DictionaryPanel';
+import { QuizPanel } from './components/QuizPanel';
 import { useTtsStatus } from './hooks/useTtsStatus';
 import { createTtsProvider } from './lib/tts';
 import { loadTtsSettings, type TtsSettings } from './lib/tts/settings';
@@ -51,7 +53,7 @@ import {
 } from './lib/custom-transliterations';
 
 type Direction = 'uey-to-uly' | 'uly-to-uey';
-type View = 'home' | 'convert' | 'learn' | 'alphabet' | 'dictionary';
+type View = 'home' | 'convert' | 'learn' | 'quiz' | 'alphabet' | 'dictionary';
 
 interface InitialState {
   direction: Direction;
@@ -115,6 +117,8 @@ export default function App() {
     activeView === 'convert' &&
     detectedDirection.confidence === 'high' &&
     detectedDirection.direction;
+  const hasTextWorkspaceActions =
+    activeView === 'convert' || activeView === 'learn';
 
   useEffect(() => {
     if (activeView !== 'convert' || !input.trim() || !output.trim()) return;
@@ -289,6 +293,7 @@ export default function App() {
             activeView={activeView}
             onConvert={() => setActiveView('convert')}
             onLearn={openLearnView}
+            onQuiz={() => setActiveView('quiz')}
             onAlphabet={() => setActiveView('alphabet')}
             onDictionary={() => setActiveView('dictionary')}
           />
@@ -307,6 +312,11 @@ export default function App() {
               <GraduationCap className="h-4 w-4" aria-hidden="true" />
               ULY to UEY study mode
             </div>
+          ) : activeView === 'quiz' ? (
+            <div className="inline-flex items-center gap-2 rounded-full bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-700">
+              <ListChecks className="h-4 w-4" aria-hidden="true" />
+              UEY quiz
+            </div>
           ) : activeView === 'alphabet' ? (
             <div className="inline-flex items-center gap-2 rounded-full bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-700">
               <BookOpenText className="h-4 w-4" aria-hidden="true" />
@@ -320,14 +330,14 @@ export default function App() {
           )}
 
           <div className="flex flex-wrap items-center gap-2">
-            {activeView !== 'home' && activeView !== 'dictionary' && activeView !== 'alphabet' && (
+            {hasTextWorkspaceActions && (
               <SpeakButton
                 text={ueyText}
                 isAvailable={isAvailable}
                 tts={tts}
               />
             )}
-            {activeView !== 'home' && activeView !== 'alphabet' && (
+            {(hasTextWorkspaceActions || activeView === 'dictionary') && (
               <button
                 type="button"
                 onClick={() => setInput('')}
@@ -338,7 +348,7 @@ export default function App() {
                 Clear
               </button>
             )}
-            {activeView !== 'home' && activeView !== 'dictionary' && activeView !== 'alphabet' && (
+            {hasTextWorkspaceActions && (
               <>
                 <button
                   type="button"
@@ -379,7 +389,7 @@ export default function App() {
               <Share2 className="h-4 w-4" aria-hidden="true" />
               Share
             </button>
-            {activeView !== 'home' && activeView !== 'dictionary' && activeView !== 'alphabet' && (
+            {hasTextWorkspaceActions && (
               <>
                 <button
                   type="button"
@@ -450,6 +460,7 @@ export default function App() {
         {activeView !== 'home' &&
           activeView !== 'dictionary' &&
           activeView !== 'alphabet' &&
+          activeView !== 'quiz' &&
           (showVoiceWarning || showUnsupportedWarning) && (
           <div
             role="status"
@@ -466,6 +477,7 @@ export default function App() {
             onConvert={() => setActiveView('convert')}
             onDictionary={() => setActiveView('dictionary')}
             onLearn={openLearnView}
+            onQuiz={() => setActiveView('quiz')}
             onAlphabet={() => setActiveView('alphabet')}
           />
         ) : activeView === 'convert' ? (
@@ -501,6 +513,8 @@ export default function App() {
           </>
         ) : activeView === 'learn' ? (
           <LearnPanel trace={trace} value={input} onChange={setInput} />
+        ) : activeView === 'quiz' ? (
+          <QuizPanel />
         ) : activeView === 'alphabet' ? (
           <AlphabetPanel />
         ) : (
@@ -520,12 +534,14 @@ function AppTabs({
   activeView,
   onConvert,
   onLearn,
+  onQuiz,
   onAlphabet,
   onDictionary,
 }: {
   activeView: View;
   onConvert: () => void;
   onLearn: () => void;
+  onQuiz: () => void;
   onAlphabet: () => void;
   onDictionary: () => void;
 }) {
@@ -539,7 +555,7 @@ function AppTabs({
   return (
     <nav
       aria-label="Workspace"
-      className="grid w-full grid-cols-4 rounded-full border border-slate-200 bg-white p-1 shadow-sm md:w-[36rem]"
+      className="grid w-full grid-cols-5 rounded-full border border-slate-200 bg-white p-1 shadow-sm md:w-[44rem]"
     >
       <button
         type="button"
@@ -558,6 +574,15 @@ function AppTabs({
       >
         <GraduationCap className="h-4 w-4 shrink-0" aria-hidden="true" />
         Learn UEY
+      </button>
+      <button
+        type="button"
+        onClick={onQuiz}
+        aria-current={activeView === 'quiz' ? 'page' : undefined}
+        className={tabClass('quiz')}
+      >
+        <ListChecks className="h-4 w-4 shrink-0" aria-hidden="true" />
+        Quiz
       </button>
       <button
         type="button"
@@ -585,11 +610,13 @@ function HomePanel({
   onConvert,
   onDictionary,
   onLearn,
+  onQuiz,
   onAlphabet,
 }: {
   onConvert: () => void;
   onDictionary: () => void;
   onLearn: () => void;
+  onQuiz: () => void;
   onAlphabet: () => void;
 }) {
   return (
@@ -653,7 +680,7 @@ function HomePanel({
         </div>
       </section>
 
-      <section className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-3 md:grid-cols-2 lg:grid-cols-5">
         <HomeFeature
           icon={<Languages className="h-5 w-5" aria-hidden="true" />}
           title="Convert"
@@ -671,6 +698,12 @@ function HomePanel({
           title="Learn UEY"
           description="Break ULY words into UEY letters, shapes, and IPA hints."
           onClick={onLearn}
+        />
+        <HomeFeature
+          icon={<ListChecks className="h-5 w-5" aria-hidden="true" />}
+          title="Quiz"
+          description="Practice all 32 UEY sounds across four presentation forms."
+          onClick={onQuiz}
         />
         <HomeFeature
           icon={<BookOpenText className="h-5 w-5" aria-hidden="true" />}
@@ -923,6 +956,7 @@ function readInitialState(): InitialState {
   const view =
     viewParam === 'learn' ||
     viewParam === 'home' ||
+    viewParam === 'quiz' ||
     viewParam === 'alphabet' ||
     viewParam === 'dictionary'
       ? viewParam

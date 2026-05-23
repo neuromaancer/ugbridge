@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ALPHABET_STUDY_ENTRIES,
   buildUlyToUeyStudy,
@@ -6,7 +6,6 @@ import {
   ULY_TO_UEY_DIGRAPHS,
   ULY_TO_UEY_LETTERS,
   ulyTokenToIpa,
-  type AlphabetStudyEntry,
   type ConversionTrace,
   type UeyStudyLetter,
   type UeyStudyWord,
@@ -51,7 +50,6 @@ const LETTER_ORDER = [
 
 const DIGRAPH_ORDER = ['ch', 'sh', 'gh', 'ng', 'zh'];
 const LEARN_PROGRESS_KEY = 'ugbridge.learnedLetters.v1';
-const PRACTICE_TOKENS = ['a', 'é', 'p', 'sh', 'ng'];
 
 const LESSON_GROUPS = [
   {
@@ -100,22 +98,7 @@ export function LearnPanel({ trace, value, onChange }: LearnPanelProps) {
   const [learnedTokens, setLearnedTokens] = useState<Set<string>>(
     () => new Set(loadLearnedTokens()),
   );
-  const [practiceIndex, setPracticeIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [practiceScore, setPracticeScore] = useState(0);
   const learnedCount = learnedTokens.size;
-  const practiceItems = useMemo(
-    () =>
-      PRACTICE_TOKENS.map((token) =>
-        ALPHABET_STUDY_ENTRIES.find((entry) => entry.token === token),
-      ).filter((entry): entry is AlphabetStudyEntry => Boolean(entry)),
-    [],
-  );
-  const practiceItem = practiceItems[practiceIndex % practiceItems.length];
-  const practiceOptions = useMemo(
-    () => buildPracticeOptions(practiceItem),
-    [practiceItem],
-  );
 
   useEffect(() => {
     saveLearnedTokens([...learnedTokens]);
@@ -128,20 +111,6 @@ export function LearnPanel({ trace, value, onChange }: LearnPanelProps) {
       else next.add(token);
       return next;
     });
-  };
-
-  const choosePracticeAnswer = (answer: string) => {
-    if (selectedAnswer) return;
-    setSelectedAnswer(answer);
-    if (answer === practiceItem.token) {
-      setPracticeScore((score) => score + 1);
-      setLearnedTokens((current) => new Set(current).add(practiceItem.token));
-    }
-  };
-
-  const nextPractice = () => {
-    setSelectedAnswer(null);
-    setPracticeIndex((index) => index + 1);
   };
 
   return (
@@ -175,16 +144,6 @@ export function LearnPanel({ trace, value, onChange }: LearnPanelProps) {
           ))}
         </div>
       </section>
-
-      <PracticePanel
-        item={practiceItem}
-        options={practiceOptions}
-        selectedAnswer={selectedAnswer}
-        score={practiceScore}
-        round={practiceIndex + 1}
-        onChoose={choosePracticeAnswer}
-        onNext={nextPractice}
-      />
 
       <section className="grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
         <TextInput mode="uly" value={value} onChange={onChange} />
@@ -332,92 +291,6 @@ function LessonGroup({
         })}
       </div>
     </article>
-  );
-}
-
-function PracticePanel({
-  item,
-  options,
-  selectedAnswer,
-  score,
-  round,
-  onChoose,
-  onNext,
-}: {
-  item: AlphabetStudyEntry;
-  options: readonly AlphabetStudyEntry[];
-  selectedAnswer: string | null;
-  score: number;
-  round: number;
-  onChoose: (answer: string) => void;
-  onNext: () => void;
-}) {
-  return (
-    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h2 className="text-sm font-semibold text-slate-800">
-            Quick practice
-          </h2>
-          <p className="mt-1 text-sm leading-6 text-slate-500">
-            Pick the ULY letter or digraph that matches the UEY form.
-          </p>
-        </div>
-        <span className="w-fit rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-500">
-          Round {round} · Score {score}
-        </span>
-      </div>
-
-      <div className="mt-4 grid gap-4 lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-center">
-        <div className="grid justify-items-center rounded-lg bg-slate-50 px-4 py-5 ring-1 ring-slate-200">
-          <span dir="rtl" lang="ug" className="text-6xl leading-none text-slate-950">
-            {item.displayUey}
-          </span>
-          <span className="mt-2 font-mono text-sm font-semibold text-emerald-700">
-            /{ulyTokenToIpa(item.token)}/
-          </span>
-        </div>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {options.map((option) => {
-            const answered = Boolean(selectedAnswer);
-            const correct = option.token === item.token;
-            const selected = option.token === selectedAnswer;
-            return (
-              <button
-                key={option.token}
-                type="button"
-                aria-label={`${option.token} ${option.kind}`}
-                onClick={() => onChoose(option.token)}
-                disabled={answered}
-                className={`rounded-md px-3 py-3 text-left ring-1 transition ${
-                  selected && correct
-                    ? 'bg-emerald-50 text-emerald-900 ring-emerald-200'
-                    : selected
-                      ? 'bg-rose-50 text-rose-900 ring-rose-200'
-                      : answered && correct
-                        ? 'bg-emerald-50 text-emerald-900 ring-emerald-200'
-                        : 'bg-white text-slate-900 ring-slate-200 hover:bg-indigo-50 hover:ring-indigo-100'
-                }`}
-              >
-                <span className="font-mono text-base font-bold">{option.token}</span>
-                <span className="ml-2 text-xs font-semibold text-slate-400">
-                  {option.kind}
-                </span>
-              </button>
-            );
-          })}
-          {selectedAnswer && (
-            <button
-              type="button"
-              onClick={onNext}
-              className="rounded-md bg-indigo-600 px-3 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 sm:col-span-2"
-            >
-              Next question
-            </button>
-          )}
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -594,17 +467,6 @@ function formClass(form: UeyStudyLetter['form']) {
 function getLetterIpa(letter: UeyStudyLetter) {
   if (letter.role === 'carrier') return '';
   return ulyTokenToIpa(letter.uly);
-}
-
-function buildPracticeOptions(item: AlphabetStudyEntry) {
-  const entries = ALPHABET_STUDY_ENTRIES.filter((entry) => entry.kind === item.kind);
-  const start = entries.findIndex((entry) => entry.token === item.token);
-  const candidates = [
-    item,
-    ...entries.slice(start + 1),
-    ...entries.slice(0, start),
-  ];
-  return candidates.slice(0, 4).sort((a, b) => a.token.localeCompare(b.token));
 }
 
 function loadLearnedTokens() {
