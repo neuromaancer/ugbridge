@@ -4,6 +4,7 @@ import {
   BookOpenText,
   BookmarkPlus,
   Copy,
+  Database,
   Download,
   Files,
   GraduationCap,
@@ -12,13 +13,17 @@ import {
   Languages,
   ListChecks,
   Moon,
+  Palette,
   Plus,
   Search,
   Share2,
+  ShieldCheck,
   Sparkles,
   Sun,
   Trash2,
   Upload,
+  Volume2,
+  WifiOff,
   X,
 } from 'lucide-react';
 import {
@@ -667,29 +672,10 @@ function HomePanel({
           </div>
         </div>
 
-        <div className="rounded-lg bg-white p-4 shadow-xs ring-1 ring-slate-200">
-          <div className="grid gap-3">
-            <div dir="rtl" lang="ug" className="text-4xl leading-relaxed text-slate-950">
-              ئۇيغۇرچە يېزىق
-            </div>
-            <div className="font-mono text-lg font-semibold text-indigo-700">
-              uyghurche yéziq
-            </div>
-            <div className="grid grid-cols-4 gap-1.5">
-              {['ئا', 'ب', 'چ', 'غ', 'ق', 'ڭ', 'ئې', 'ي'].map((letter) => (
-                <span
-                  key={letter}
-                  dir="rtl"
-                  lang="ug"
-                  className="grid h-12 place-items-center rounded-md bg-white text-2xl text-slate-900 ring-1 ring-slate-200"
-                >
-                  {letter}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+        <HomePreview />
       </section>
+
+      <HomeCapabilityStrip />
 
       <section className="grid gap-3 md:grid-cols-2 lg:grid-cols-5">
         <HomeFeature
@@ -724,6 +710,126 @@ function HomePanel({
         />
       </section>
     </main>
+  );
+}
+
+function HomePreview() {
+  return (
+    <div className="rounded-lg bg-white p-4 shadow-xs ring-1 ring-slate-200">
+      <div className="flex items-center justify-between gap-3">
+        <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
+          <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+          Live bridge
+        </div>
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+          <WifiOff className="h-3.5 w-3.5" aria-hidden="true" />
+          Offline core
+        </div>
+      </div>
+
+      <div className="mt-4 grid gap-3">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+          <div className="mb-2 flex items-center justify-between text-xs font-semibold text-slate-500">
+            <span>UEY</span>
+            <Languages className="h-4 w-4 text-indigo-600" aria-hidden="true" />
+          </div>
+          <div dir="rtl" lang="ug" className="text-4xl leading-relaxed text-slate-950">
+            ئۇيغۇرچە يېزىق
+          </div>
+        </div>
+
+        <div className="grid items-center gap-2 sm:grid-cols-[1fr_auto_1fr]">
+          <div className="rounded-md bg-white p-3 ring-1 ring-slate-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              ULY
+            </div>
+            <div className="mt-1 font-mono text-lg font-semibold text-indigo-700">
+              uyghurche yéziq
+            </div>
+          </div>
+          <div className="grid place-items-center text-indigo-600">
+            <ArrowRight className="h-5 w-5" aria-hidden="true" />
+          </div>
+          <div className="rounded-md bg-white p-3 ring-1 ring-slate-200">
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              IPA
+            </div>
+            <div className="mt-1 font-mono text-sm font-semibold text-emerald-700">
+              /jɑχʃimusiz/
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-4 gap-1.5">
+          {['ئا', 'ب', 'چ', 'غ', 'ق', 'ڭ', 'ئې', 'ي'].map((letter) => (
+            <span
+              key={letter}
+              dir="rtl"
+              lang="ug"
+              className="grid h-12 place-items-center rounded-md bg-white text-2xl text-slate-900 ring-1 ring-slate-200"
+            >
+              {letter}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HomeCapabilityStrip() {
+  return (
+    <section
+      aria-label="UG Bridge capabilities"
+      className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4"
+    >
+      <CapabilityPill
+        icon={<Database className="h-4 w-4" aria-hidden="true" />}
+        title="350k headwords"
+        detail="Lazy dictionary shards"
+      />
+      <CapabilityPill
+        icon={<ShieldCheck className="h-4 w-4" aria-hidden="true" />}
+        title="Local first"
+        detail="History and custom words stay here"
+      />
+      <CapabilityPill
+        icon={<Palette className="h-4 w-4" aria-hidden="true" />}
+        title="System theme"
+        detail="System, day, and night modes"
+      />
+      <CapabilityPill
+        icon={<Volume2 className="h-4 w-4" aria-hidden="true" />}
+        title="Speech ready"
+        detail="Browser or custom TTS endpoint"
+      />
+    </section>
+  );
+}
+
+function CapabilityPill({
+  icon,
+  title,
+  detail,
+}: {
+  icon: ReactNode;
+  title: string;
+  detail: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-3 shadow-xs">
+      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-indigo-50 text-indigo-700">
+        {icon}
+      </span>
+      <span className="min-w-0">
+        <span className="block truncate text-sm font-semibold text-slate-950">
+          {title}
+        </span>
+        <span className="block truncate text-xs text-slate-500">
+          {detail}
+        </span>
+      </span>
+    </div>
   );
 }
 

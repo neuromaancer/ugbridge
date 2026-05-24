@@ -17,6 +17,18 @@
   <a href="#quick-start">Quick start</a>
 </p>
 
+<p align="center">
+  <img alt="React" src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=111827">
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss&logoColor=ffffff">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=ffffff">
+  <img alt="Firebase Hosting" src="https://img.shields.io/badge/Firebase-Hosting-FFCA28?logo=firebase&logoColor=111827">
+  <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-10B981">
+</p>
+
+<p align="center">
+  <img src="public/readme-preview.svg" alt="UG Bridge app preview" width="900">
+</p>
+
 ```text
 ياخشىمۇسىز  ⇄  yaxshimusiz
 ```

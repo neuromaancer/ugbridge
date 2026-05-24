@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">UG Bridge app preview</title>
+  <desc id="desc">A visual preview of the UG Bridge converter, dictionary, learning tools, and theme settings.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef2ff"/>
+      <stop offset="0.52" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#ccfbf1"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#0f172a" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" rx="44" fill="url(#bg)"/>
+
+  <g transform="translate(78 64)">
+    <rect width="1044" height="502" rx="30" fill="#ffffff" filter="url(#shadow)"/>
+    <rect x="24" y="24" width="996" height="454" rx="22" fill="#f8fafc" stroke="#dbe4f0"/>
+
+    <g transform="translate(54 48)">
+      <rect width="48" height="48" rx="14" fill="#4f46e5"/>
+      <text x="24" y="33" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="800" text-anchor="middle">UG</text>
+      <text x="68" y="35" fill="#0f172a" font-family="Arial, sans-serif" font-size="34" font-weight="800">UG Bridge</text>
+      <rect x="768" y="6" width="82" height="36" rx="18" fill="#4f46e5"/>
+      <text x="809" y="29" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700" text-anchor="middle">Night</text>
+      <rect x="862" y="6" width="98" height="36" rx="18" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="911" y="29" fill="#334155" font-family="Arial, sans-serif" font-size="14" font-weight="700" text-anchor="middle">GitHub</text>
+    </g>
+
+    <g transform="translate(54 128)">
+      <text x="0" y="24" fill="#4f46e5" font-family="Arial, sans-serif" font-size="18" font-weight="800" letter-spacing="5">UYGHUR SCRIPT WORKSPACE</text>
+      <text x="0" y="74" fill="#020617" font-family="Arial, sans-serif" font-size="42" font-weight="800">Convert, search, and study</text>
+      <text x="0" y="124" fill="#020617" font-family="Arial, sans-serif" font-size="42" font-weight="800">Uyghur across UEY and ULY.</text>
+      <text x="0" y="166" fill="#475569" font-family="Arial, sans-serif" font-size="22">ياخشىمۇسىز ⇄ yaxshimusiz</text>
+    </g>
+
+    <g transform="translate(642 146)">
+      <rect width="318" height="198" rx="18" fill="#ffffff" stroke="#dbe4f0"/>
+      <text x="286" y="62" fill="#020617" font-family="Arial, sans-serif" font-size="34" font-weight="800" text-anchor="end">ئۇيغۇرچە يېزىق</text>
+      <text x="28" y="104" fill="#4f46e5" font-family="monospace" font-size="22" font-weight="800">uyghurche yéziq</text>
+      <g transform="translate(28 126)">
+        <rect width="56" height="42" rx="10" fill="#eef2ff" stroke="#c7d2fe"/>
+        <rect x="66" width="56" height="42" rx="10" fill="#f0fdf4" stroke="#bbf7d0"/>
+        <rect x="132" width="56" height="42" rx="10" fill="#fffbeb" stroke="#fde68a"/>
+        <rect x="198" width="56" height="42" rx="10" fill="#ecfeff" stroke="#a5f3fc"/>
+        <text x="28" y="29" fill="#0f172a" font-family="Arial, sans-serif" font-size="25" text-anchor="middle">ئ</text>
+        <text x="94" y="29" fill="#0f172a" font-family="Arial, sans-serif" font-size="25" text-anchor="middle">ب</text>
+        <text x="160" y="29" fill="#0f172a" font-family="Arial, sans-serif" font-size="25" text-anchor="middle">چ</text>
+        <text x="226" y="29" fill="#0f172a" font-family="Arial, sans-serif" font-size="25" text-anchor="middle">ڭ</text>
+      </g>
+    </g>
+
+    <g transform="translate(54 386)">
+      <g>
+        <circle cx="22" cy="22" r="22" fill="#eef2ff"/>
+        <path d="M15 22h14M22 15v14" stroke="#4f46e5" stroke-width="3" stroke-linecap="round"/>
+        <text x="56" y="16" fill="#0f172a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Convert</text>
+        <text x="56" y="40" fill="#64748b" font-family="Arial, sans-serif" font-size="15">UEY ⇄ ULY</text>
+      </g>
+      <g transform="translate(220 0)">
+        <circle cx="22" cy="22" r="22" fill="#ecfdf5"/>
+        <path d="M13 24h18M16 17h12M19 31h6" stroke="#059669" stroke-width="3" stroke-linecap="round"/>
+        <text x="56" y="16" fill="#0f172a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Dictionary</text>
+        <text x="56" y="40" fill="#64748b" font-family="Arial, sans-serif" font-size="15">Offline shards</text>
+      </g>
+      <g transform="translate(470 0)">
+        <circle cx="22" cy="22" r="22" fill="#fff7ed"/>
+        <path d="M15 18h14M15 25h14M15 32h9" stroke="#ea580c" stroke-width="3" stroke-linecap="round"/>
+        <text x="56" y="16" fill="#0f172a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Learn</text>
+        <text x="56" y="40" fill="#64748b" font-family="Arial, sans-serif" font-size="15">Forms + IPA</text>
+      </g>
+      <g transform="translate(690 0)">
+        <circle cx="22" cy="22" r="22" fill="#f5f3ff"/>
+        <path d="M14 25l5 5 12-14" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="56" y="16" fill="#0f172a" font-family="Arial, sans-serif" font-size="17" font-weight="800">Quiz</text>
+        <text x="56" y="40" fill="#64748b" font-family="Arial, sans-serif" font-size="15">32 sounds</text>
+      </g>
+    </g>
+  </g>
+</svg>
