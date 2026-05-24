@@ -1,14 +1,21 @@
-# UG Bridge
+<p align="center">
+  <img src="public/icon.svg" alt="UG Bridge icon" width="144" height="144">
+</p>
 
-A static browser tool for Uyghur Arabic script (**UEY**) and Uyghur Latin
-Yéziqi (**ULY**).
+<h1 align="center">UG Bridge</h1>
 
-UG Bridge can convert text, search a Uyghur-English dictionary, study alphabet
-forms, and play speech when a browser or custom TTS endpoint is available.
+<p align="center">
+  A static browser tool for Uyghur Arabic script (<strong>UEY</strong>) and
+  Uyghur Latin Yéziqi (<strong>ULY</strong>).
+</p>
 
-Live app: <https://ugbr1dge.web.app>
-
-Source code: <https://github.com/neuromaancer/ugbridge>
+<p align="center">
+  <a href="https://ugbr1dge.web.app">Live app</a>
+  ·
+  <a href="#features">Features</a>
+  ·
+  <a href="#quick-start">Quick start</a>
+</p>
 
 ```text
 ياخشىمۇسىز  ⇄  yaxshimusiz
@@ -23,30 +30,18 @@ Source code: <https://github.com/neuromaancer/ugbridge>
 
 ## Features
 
-- **Home**: overview page with quick entry points into the main tools.
-- **Convert**: UEY ⇄ ULY conversion with colored segment highlighting.
-- **Visible letter bridge**: ULY → UEY output shows each UEY segment with its
-  matching ULY token underneath.
-- **Dictionary**: offline Uyghur-English lookup by UEY, ULY, or English.
-- **Dictionary suggestions**: autocomplete with keyboard selection.
-- **Learn UEY**: local-only learning path with ULY input, UEY output, IPA
-  hints, and per-letter breakdown.
-- **Quiz**: quick practice for all 32 UEY sounds across isolated, initial,
-  medial, and final presentation forms.
-- **Alphabet**: all 32 UEY letters with IPA, examples, joining forms, and
-  word-initial hamza vowel forms.
-- **Smart direction**: strong UEY/ULY script signals automatically switch the
-  converter direction.
-- **Custom words**: browser-local fixed UEY/ULY mappings for names and
-  exceptions.
-- **Recent conversions**: browser-local history for quick restore.
-- **ULY input helper**: quick inserts for `é`, `ö`, `ü`, `sh`, `ch`, `gh`,
-  `ng`, and `zh`.
-- **Share, copy, batch text**: share URLs, copy outputs, upload `.txt`, and
-  download converted `.txt`.
-- **PWA app shell**: installable static app with offline shell caching.
-- **TTS settings**: browser speech, local MMS, Hugging Face Space-style proxy,
-  or a custom endpoint.
+- **Convert UEY ⇄ ULY** with smart direction detection, colored segment
+  highlighting, IPA hints, copy/share actions, and `.txt` upload/download.
+- **Inspect the letter bridge** from ULY to UEY, including per-segment mapping,
+  word-initial hamza behavior, and Uyghur letter forms.
+- **Search offline dictionary data** by UEY, ULY, or English with suggestions
+  and lazy-loaded static shards.
+- **Study and practice UEY** through alphabet pages, examples, joining forms,
+  and a quiz covering all 32 sounds.
+- **Customize local workflows** with browser-local custom words, recent
+  conversions, ULY input helpers, and installable PWA shell caching.
+- **Speak UEY text** through browser speech, local MMS, Hugging Face
+  Space-style proxy, or a custom TTS endpoint.
 
 ## Quick Start
 
@@ -227,6 +222,15 @@ guidance.
 
 Firebase Web `apiKey` values are public project identifiers, not secrets.
 Real access must be protected with Firebase Security Rules and Authentication.
+
+## Privacy and Data
+
+Core conversion, dictionary lookup, study tools, custom words, and recent
+history run in the browser. Custom words, history, and TTS settings are stored
+locally in the user's browser storage.
+
+The app sends text to a network service only when a user configures or selects
+a TTS provider that requires an endpoint.
 
 ## Deployment
 
