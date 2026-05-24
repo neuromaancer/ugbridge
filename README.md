@@ -39,7 +39,8 @@
 - **Study and practice UEY** through alphabet pages, examples, joining forms,
   and a quiz covering all 32 sounds.
 - **Customize local workflows** with browser-local custom words, recent
-  conversions, ULY input helpers, and installable PWA shell caching.
+  conversions, ULY input helpers, system/day/night theme settings, and
+  installable PWA shell caching.
 - **Speak UEY text** through browser speech, local MMS, Hugging Face
   Space-style proxy, or a custom TTS endpoint.
 
@@ -226,8 +227,8 @@ Real access must be protected with Firebase Security Rules and Authentication.
 ## Privacy and Data
 
 Core conversion, dictionary lookup, study tools, custom words, and recent
-history run in the browser. Custom words, history, and TTS settings are stored
-locally in the user's browser storage.
+history run in the browser. Custom words, history, theme mode, and TTS settings
+are stored locally in the user's browser storage.
 
 The app sends text to a network service only when a user configures or selects
 a TTS provider that requires an endpoint.

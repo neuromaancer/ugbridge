@@ -27,6 +27,32 @@
     <title>UG Bridge</title>
   </head>
   <body>
+    <script>
+      (() => {
+        try {
+          const storageKey = 'ulybridge.theme.mode.v1';
+          const stored = localStorage.getItem(storageKey);
+          const mode = stored === 'dark' || stored === 'light'
+            ? stored
+            : 'system';
+          const theme = mode === 'system'
+            ? (matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light')
+            : mode;
+          document.documentElement.dataset.themeMode = mode;
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+          const themeColor = document.querySelector('meta[name="theme-color"]');
+          if (themeColor) {
+            themeColor.content = theme === 'dark' ? '#020617' : '#0f766e';
+          }
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+          document.documentElement.style.colorScheme = 'light';
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

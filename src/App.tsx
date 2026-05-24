@@ -11,10 +11,12 @@ import {
   Home,
   Languages,
   ListChecks,
+  Moon,
   Plus,
   Search,
   Share2,
   Sparkles,
+  Sun,
   Trash2,
   Upload,
   X,
@@ -34,8 +36,10 @@ import { AlphabetPanel } from './components/AlphabetPanel';
 import { DictionaryPanel } from './components/DictionaryPanel';
 import { QuizPanel } from './components/QuizPanel';
 import { useTtsStatus } from './hooks/useTtsStatus';
+import { useThemeMode } from './hooks/useThemeMode';
 import { createTtsProvider } from './lib/tts';
 import { loadTtsSettings, type TtsSettings } from './lib/tts/settings';
+import type { ThemeMode } from './lib/theme-settings';
 import {
   addConversionHistoryEntry,
   clearConversionHistory,
@@ -66,6 +70,7 @@ const BUTTON_CLASS =
 
 export default function App() {
   const initial = useMemo(readInitialState, []);
+  const [themeMode, setThemeMode] = useThemeMode();
   const [activeView, setActiveView] = useState<View>(initial.view);
   const [direction, setDirection] = useState<Direction>(initial.direction);
   const [input, setInput] = useState(initial.input);
@@ -290,7 +295,10 @@ export default function App() {
           </div>
 
           <div className="flex flex-col gap-3 md:items-end">
-            <GitHubLink />
+            <div className="flex flex-wrap items-center gap-2 md:justify-end">
+              <ThemeToggle mode={themeMode} onChange={setThemeMode} />
+              <GitHubLink />
+            </div>
             <AppTabs
               activeView={activeView}
               onConvert={() => setActiveView('convert')}
@@ -765,6 +773,56 @@ function HomeFeature({
         {description}
       </span>
     </button>
+  );
+}
+
+function ThemeToggle({
+  mode,
+  onChange,
+}: {
+  mode: ThemeMode;
+  onChange: (mode: ThemeMode) => void;
+}) {
+  const buttonClass = (value: ThemeMode) =>
+    `inline-flex min-w-18 items-center justify-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+      mode === value
+        ? 'bg-indigo-600 text-white shadow-xs'
+        : 'text-slate-600 hover:bg-slate-50'
+    }`;
+
+  return (
+    <div
+      className="grid grid-cols-3 rounded-full border border-slate-200 bg-white p-1 shadow-xs"
+      aria-label="Theme mode"
+      role="group"
+    >
+      <button
+        type="button"
+        onClick={() => onChange('system')}
+        aria-pressed={mode === 'system'}
+        className={buttonClass('system')}
+      >
+        System
+      </button>
+      <button
+        type="button"
+        onClick={() => onChange('light')}
+        aria-pressed={mode === 'light'}
+        className={buttonClass('light')}
+      >
+        <Sun className="h-3.5 w-3.5" aria-hidden="true" />
+        Day
+      </button>
+      <button
+        type="button"
+        onClick={() => onChange('dark')}
+        aria-pressed={mode === 'dark'}
+        className={buttonClass('dark')}
+      >
+        <Moon className="h-3.5 w-3.5" aria-hidden="true" />
+        Night
+      </button>
+    </div>
   );
 }
 
