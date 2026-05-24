@@ -6,6 +6,7 @@ import {
   Copy,
   Download,
   Files,
+  GitBranch,
   GraduationCap,
   History,
   Home,
@@ -653,6 +654,15 @@ function HomePanel({
               <Search className="h-4 w-4" aria-hidden="true" />
               Search dictionary
             </button>
+            <a
+              href="https://github.com/neuromaancer/ugbridge"
+              target="_blank"
+              rel="noreferrer"
+              className={BUTTON_CLASS}
+            >
+              <GitBranch className="h-4 w-4" aria-hidden="true" />
+              GitHub
+            </a>
           </div>
         </div>
 

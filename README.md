@@ -8,6 +8,8 @@ forms, and play speech when a browser or custom TTS endpoint is available.
 
 Live app: <https://ugbr1dge.web.app>
 
+Source code: <https://github.com/neuromaancer/ugbridge>
+
 ```text
 ياخشىمۇسىز  ⇄  yaxshimusiz
 ```
