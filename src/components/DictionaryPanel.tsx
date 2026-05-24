@@ -98,7 +98,7 @@ export function DictionaryPanel({
 
   return (
     <div className="grid gap-5">
-      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs">
         <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
           <div>
             <label
@@ -122,7 +122,7 @@ export function DictionaryPanel({
                   }}
                   className={`rounded-md px-2 py-1.5 text-xs font-semibold transition ${
                     searchMode === item.mode
-                      ? 'bg-white text-indigo-700 shadow-sm'
+                      ? 'bg-white text-indigo-700 shadow-xs'
                       : 'text-slate-500 hover:text-slate-700'
                   }`}
                   aria-pressed={searchMode === item.mode}
@@ -157,7 +157,7 @@ export function DictionaryPanel({
                     ? `dictionary-suggestion-${selectedSuggestion}`
                     : undefined
                 }
-                className="h-12 w-full rounded-lg border border-slate-200 bg-white px-4 pl-11 text-base text-slate-950 shadow-sm transition placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                className="h-12 w-full rounded-lg border border-slate-200 bg-white px-4 pl-11 text-base text-slate-950 shadow-xs transition placeholder:text-slate-400 focus:border-indigo-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-200"
               />
               {showSuggestions ? (
                 <div
@@ -285,7 +285,7 @@ function DictionaryResultCard({
     entry.definitions.length - visibleDefinitions.length;
 
   return (
-    <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+    <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-3">

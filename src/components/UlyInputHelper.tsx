@@ -14,7 +14,7 @@ export function UlyInputHelper({ onInsert, className = '' }: UlyInputHelperProps
           key={item}
           type="button"
           onClick={() => onInsert(item)}
-          className="min-w-8 rounded-md border border-slate-200 bg-white px-2 py-1 font-semibold text-slate-700 shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
+          className="min-w-8 rounded-md border border-slate-200 bg-white px-2 py-1 font-semibold text-slate-700 shadow-xs transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
         >
           {item}
         </button>

@@ -18,7 +18,7 @@ export function AlphabetPanel() {
 
   return (
     <>
-      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs">
         <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-sm font-semibold text-slate-800">
@@ -135,7 +135,7 @@ function AlphabetDetails({
   onClose: () => void;
 }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-sm">
+    <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 shadow-xs">
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="font-mono text-2xl font-bold text-indigo-700">
@@ -245,7 +245,7 @@ function AlphabetExampleRow({
             key={`${example.id}-${index}`}
             className={
               example.highlightIndexes.includes(index)
-                ? 'rounded bg-amber-200 px-1 text-amber-950'
+                ? 'rounded-sm bg-amber-200 px-1 text-amber-950'
                 : undefined
             }
             title={

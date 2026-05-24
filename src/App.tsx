@@ -62,7 +62,7 @@ interface InitialState {
 }
 
 const BUTTON_CLASS =
-  'inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50';
+  'inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-xs transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50';
 
 export default function App() {
   const initial = useMemo(readInitialState, []);
@@ -269,7 +269,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setActiveView('home')}
-                className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-600 text-white shadow-sm transition hover:bg-indigo-700"
+                className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-600 text-white shadow-xs transition hover:bg-indigo-700"
                 aria-label="Open home"
               >
                 <Languages className="h-5 w-5" aria-hidden="true" />
@@ -304,7 +304,7 @@ export default function App() {
 
         <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
           {activeView === 'home' ? (
-            <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-xs ring-1 ring-slate-200">
               <Home className="h-4 w-4" aria-hidden="true" />
               Home
             </div>
@@ -551,14 +551,14 @@ function AppTabs({
   const tabClass = (view: View) =>
     `inline-flex items-center justify-center gap-1 rounded-full px-1.5 py-2 text-[0.7rem] font-semibold transition sm:gap-1.5 sm:px-3 sm:text-sm ${
       activeView === view
-        ? 'bg-indigo-600 text-white shadow-sm'
+        ? 'bg-indigo-600 text-white shadow-xs'
         : 'text-slate-600 hover:bg-slate-50'
     }`;
 
   return (
     <nav
       aria-label="Workspace"
-      className="grid w-full grid-cols-5 rounded-full border border-slate-200 bg-white p-1 shadow-sm md:w-[44rem]"
+      className="grid w-full grid-cols-5 rounded-full border border-slate-200 bg-white p-1 shadow-xs md:w-176"
     >
       <button
         type="button"
@@ -659,7 +659,7 @@ function HomePanel({
           </div>
         </div>
 
-        <div className="rounded-lg bg-white p-4 shadow-sm ring-1 ring-slate-200">
+        <div className="rounded-lg bg-white p-4 shadow-xs ring-1 ring-slate-200">
           <div className="grid gap-3">
             <div dir="rtl" lang="ug" className="text-4xl leading-relaxed text-slate-950">
               ئۇيغۇرچە يېزىق
@@ -753,7 +753,7 @@ function HomeFeature({
     <button
       type="button"
       onClick={onClick}
-      className="min-h-40 rounded-lg border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50"
+      className="min-h-40 rounded-lg border border-slate-200 bg-white p-4 text-left shadow-xs transition hover:border-indigo-200 hover:bg-indigo-50"
     >
       <span className="grid h-10 w-10 place-items-center rounded-md bg-slate-100 text-slate-700">
         {icon}
@@ -774,7 +774,7 @@ function GitHubLink() {
       href="https://github.com/neuromaancer/ugbridge"
       target="_blank"
       rel="noreferrer"
-      className="inline-flex items-center gap-2 self-start rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 md:self-end"
+      className="inline-flex items-center gap-2 self-start rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-xs transition hover:border-slate-300 hover:bg-slate-50 md:self-end"
     >
       <GitHubIcon className="h-4 w-4" />
       GitHub
@@ -839,7 +839,7 @@ function CustomTransliterationPanel({
   return (
     <section
       aria-label="Custom transliterations"
-      className="mt-6 rounded-lg border border-slate-200 bg-white p-3 shadow-sm"
+      className="mt-6 rounded-lg border border-slate-200 bg-white p-3 shadow-xs"
     >
       <div className="mb-3 inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
         <BookmarkPlus className="h-4 w-4 text-slate-400" aria-hidden="true" />
@@ -860,7 +860,7 @@ function CustomTransliterationPanel({
           dir="rtl"
           lang="ug"
           placeholder="قەشقەر"
-          className="min-w-0 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+          className="min-w-0 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-hidden transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
           aria-label="Custom UEY word"
         />
         <input
@@ -868,7 +868,7 @@ function CustomTransliterationPanel({
           value={uly}
           onChange={(event) => onUlyChange(event.target.value)}
           placeholder="Kashgar"
-          className="min-w-0 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+          className="min-w-0 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-hidden transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
           aria-label="Custom ULY word"
         />
         <button
@@ -924,7 +924,7 @@ function ConversionHistoryPanel({
   return (
     <section
       aria-label="Recent conversions"
-      className="mt-6 rounded-lg border border-slate-200 bg-white p-3 shadow-sm"
+      className="mt-6 rounded-lg border border-slate-200 bg-white p-3 shadow-xs"
     >
       <div className="mb-3 flex items-center justify-between gap-3">
         <div className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
@@ -948,7 +948,7 @@ function ConversionHistoryPanel({
             onClick={() => onRestore(entry)}
             className="min-w-0 rounded-md border border-slate-200 bg-slate-50 p-3 text-left transition hover:border-indigo-200 hover:bg-indigo-50"
           >
-            <span className="mb-2 inline-flex rounded-full bg-white px-2 py-0.5 text-[0.7rem] font-semibold text-slate-500 shadow-sm">
+            <span className="mb-2 inline-flex rounded-full bg-white px-2 py-0.5 text-[0.7rem] font-semibold text-slate-500 shadow-xs">
               {entry.direction === 'uey-to-uly' ? 'UEY → ULY' : 'ULY → UEY'}
             </span>
             <span className="block truncate text-sm font-medium text-slate-900">
@@ -972,7 +972,7 @@ function LegendItem({
   label: string;
 }) {
   return (
-    <span className={`rounded px-2 py-1 font-medium ${className}`}>
+    <span className={`rounded-sm px-2 py-1 font-medium ${className}`}>
       {label}
     </span>
   );

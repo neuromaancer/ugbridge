@@ -79,7 +79,7 @@ export function TextInput({ mode, value, onChange }: TextInputProps) {
         dir={config.dir}
         lang={config.lang}
         placeholder={config.placeholder}
-        className="h-56 w-full resize-y rounded-lg border border-slate-200 bg-white p-4 text-xl leading-relaxed text-slate-900 shadow-sm transition focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+        className="h-56 w-full resize-y rounded-lg border border-slate-200 bg-white p-4 text-xl leading-relaxed text-slate-900 shadow-xs transition focus:border-indigo-400 focus:outline-hidden focus:ring-2 focus:ring-indigo-200"
       />
     </div>
   );

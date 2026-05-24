@@ -3,7 +3,7 @@ import { webcrypto } from 'node:crypto';
 import type { Plugin } from 'vite';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
-// Node 18 does not expose globalThis.crypto by default; msedge-tts needs it.
+// msedge-tts expects globalThis.crypto; provide it when the runtime omits it.
 if (typeof globalThis.crypto === 'undefined') {
   Object.defineProperty(globalThis, 'crypto', {
     value: webcrypto,

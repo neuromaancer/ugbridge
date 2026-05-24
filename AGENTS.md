@@ -13,7 +13,8 @@ Check git status before edits and preserve unrelated user changes.
 ## Stack
 
 - Vite + React 18 + TypeScript
-- Tailwind CSS v3 (not v4: `@tailwindcss/oxide` needs Node >=20, current project target is Node 18.19)
+- Tailwind CSS v4 via `@tailwindcss/vite`
+- Node 24+ baseline
 - Lucide React for UI icons
 - Vitest + Testing Library for tests
 - Static site only; no backend yet
@@ -122,7 +123,7 @@ npm run preview
 
 ## Do Not
 
-- Do not suggest Tailwind v4 until Node is upgraded to >=20.
+- Do not lower the Node baseline below 24 without checking the Tailwind and Vite toolchain requirements.
 - Do not add a backend unless TTS quality is the proven bottleneck.
 - Do not put stateful bridge logic into components; keep components mostly dumb and push logic into `src/lib/` or hooks.
 - Do not expand the converter into a dictionary lookup feature without the user's go-ahead; language-aware features are deferred.

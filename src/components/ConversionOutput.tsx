@@ -90,7 +90,7 @@ export function ConversionOutput({
         {ipa ? (
           <p
             aria-label="International Phonetic Alphabet"
-            className="w-full truncate rounded-md border border-slate-200 bg-white px-3 py-1.5 font-mono text-sm text-slate-600 shadow-sm"
+            className="w-full truncate rounded-md border border-slate-200 bg-white px-3 py-1.5 font-mono text-sm text-slate-600 shadow-xs"
           >
             IPA /{ipa}/
           </p>
@@ -100,7 +100,7 @@ export function ConversionOutput({
         id="text-output"
         dir={config.dir}
         lang={config.lang}
-        className="h-56 w-full overflow-auto whitespace-pre-wrap rounded-lg border border-slate-200 bg-slate-50/60 p-4 text-xl leading-relaxed text-slate-900 shadow-sm"
+        className="h-56 w-full overflow-auto whitespace-pre-wrap rounded-lg border border-slate-200 bg-slate-50/60 p-4 text-xl leading-relaxed text-slate-900 shadow-xs"
       >
         {mode === 'uey' && value ? (
           <div className="grid gap-4">
@@ -145,7 +145,7 @@ function renderHighlightedSegments(trace: ConversionTrace, showSourceBridge = fa
         title={segment.note ?? `${segment.source || ' '} → ${segment.output}`}
         className={
           HIGHLIGHT_CLASSES[segment.kind]
-            ? `${HIGHLIGHT_CLASSES[segment.kind]} rounded px-0.5 transition hover:ring-1 hover:ring-indigo-300`
+            ? `${HIGHLIGHT_CLASSES[segment.kind]} rounded-sm px-0.5 transition hover:ring-1 hover:ring-indigo-300`
             : undefined
         }
       >

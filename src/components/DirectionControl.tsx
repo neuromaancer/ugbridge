@@ -15,7 +15,7 @@ export function DirectionControl({ direction, onSwap }: DirectionControlProps) {
     <button
       type="button"
       onClick={onSwap}
-      className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm shadow-sm transition hover:border-indigo-400 hover:shadow focus:outline-none focus:ring-2 focus:ring-indigo-200"
+      className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm shadow-xs transition hover:border-indigo-400 hover:shadow-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-200"
       aria-label={`Swap conversion direction. Currently ${leftLabel} to ${rightLabel}.`}
       title="Click to swap direction"
     >

@@ -149,7 +149,7 @@ export function LearnPanel({ trace, value, onChange }: LearnPanelProps) {
         <TextInput mode="uly" value={value} onChange={onChange} />
 
         <div className="grid gap-4">
-          <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs">
             <div className="mb-3 flex items-center justify-between gap-3">
               <h2 className="text-sm font-semibold text-slate-700">
                 Coherent UEY
@@ -171,7 +171,7 @@ export function LearnPanel({ trace, value, onChange }: LearnPanelProps) {
             </div>
           </section>
 
-          <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs">
             <div className="mb-4 flex items-center justify-between gap-3">
               <h2 className="text-sm font-semibold text-slate-700">
                 UEY letters to ULY and IPA
@@ -209,7 +209,7 @@ export function LearnPanel({ trace, value, onChange }: LearnPanelProps) {
         )}
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs">
         <h2 className="mb-4 text-sm font-semibold text-slate-700">
           ULY to UEY + IPA reference
         </h2>
@@ -253,7 +253,7 @@ function LessonGroup({
   ).length;
 
   return (
-    <article className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+    <article className="rounded-lg border border-slate-200 bg-white p-4 shadow-xs">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
@@ -333,7 +333,7 @@ function LetterArrowTile({ letter }: { letter: UeyStudyLetter }) {
   const ipa = getLetterIpa(letter);
 
   return (
-    <div className="grid min-w-[3.75rem] justify-items-center gap-1 rounded-md bg-slate-50 px-1.5 py-2 ring-1 ring-slate-200">
+    <div className="grid min-w-15 justify-items-center gap-1 rounded-md bg-slate-50 px-1.5 py-2 ring-1 ring-slate-200">
       <span dir="rtl" lang="ug" className="text-lg font-semibold">
         {letter.uey}
       </span>
@@ -357,7 +357,7 @@ function LetterArrowTile({ letter }: { letter: UeyStudyLetter }) {
 
 function WordShapePanel({ word }: { word: UeyStudyWord }) {
   return (
-    <article className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+    <article className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xs">
       <div className="flex flex-col gap-3 border-b border-slate-200 bg-slate-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <div dir="rtl" lang="ug" className="text-4xl leading-relaxed text-slate-950">
           {word.text}

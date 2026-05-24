@@ -156,7 +156,7 @@ export function QuizPanel() {
     const missedCount = groupResults.length - correctCount;
 
     return (
-      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs">
         <div className="grid gap-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
@@ -198,7 +198,7 @@ export function QuizPanel() {
   }
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h2 className="text-sm font-semibold text-slate-800">
@@ -218,7 +218,7 @@ export function QuizPanel() {
                 onClick={() => setMode(quizMode.mode)}
                 className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
                   mode === quizMode.mode
-                    ? 'bg-indigo-600 text-white shadow-sm'
+                    ? 'bg-indigo-600 text-white shadow-xs'
                     : 'text-slate-500 hover:bg-white'
                 }`}
               >

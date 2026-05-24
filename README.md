@@ -47,7 +47,7 @@
 
 Requirements:
 
-- Node 18 or newer
+- Node 24 or newer
 - npm
 
 ```bash
@@ -72,15 +72,15 @@ npm run dictionary:build # rebuild generated dictionary shards
 ## Stack
 
 - Vite + React 18 + TypeScript
-- Tailwind CSS v3
+- Tailwind CSS v4 with the `@tailwindcss/vite` plugin
 - Lucide React icons
 - Vitest + Testing Library
 - Firebase Hosting
 - Firebase Web SDK initialized for future Auth / Firestore use
 - Static app architecture; no backend is required for core features
 
-Tailwind is intentionally kept on v3 while the project supports Node 18.
-Tailwind v4 should wait until the runtime baseline is Node 20 or newer.
+The project targets Node 24+ so the Tailwind v4 toolchain can run on an
+active LTS baseline.
 
 ## Project Structure
 
