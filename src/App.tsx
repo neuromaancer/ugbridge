@@ -1152,6 +1152,7 @@ function readInitialState(): InitialState {
     params.get('d') === 'uly-to-uey' ? 'uly-to-uey' : 'uey-to-uly';
   const viewParam = params.get('view');
   const view =
+    viewParam === 'convert' ||
     viewParam === 'learn' ||
     viewParam === 'home' ||
     viewParam === 'quiz' ||

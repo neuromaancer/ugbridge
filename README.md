@@ -267,8 +267,9 @@ configured in [.firebaserc](.firebaserc).
 ## Testing
 
 The test suite covers converter behavior, round-trip expectations, IPA hints,
-alphabet data, dictionary search, custom transliterations, history, and TTS
-settings.
+alphabet data, dictionary search and shard loading, dictionary panel
+interactions, app conversion workflows, custom transliterations, history, and
+TTS settings.
 
 ```bash
 npm test
