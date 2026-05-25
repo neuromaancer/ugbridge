@@ -180,7 +180,9 @@ npm run dictionary:build
 
 Generated data is committed so Firebase Hosting can serve it directly. The app
 does not download the whole dictionary on page load; it lazy-loads only the
-relevant shard for the active query and search mode.
+relevant shard for the active query and search mode. Manifest and shard fetches
+are cached after successful loads, while transient failures are left retryable
+so a temporary network error does not poison the session.
 
 Current generated size:
 
@@ -194,6 +196,8 @@ input is ULY.
 
 The default provider is the browser's Web Speech API. Most desktop browsers do
 not ship a Uyghur voice, so the UI warns when no `ug-*` voice is available.
+If browser voice detection fails, the app treats that as no Uyghur voice rather
+than leaving speech status stuck in an unknown state.
 
 The app also supports a user-provided TTS API from the **TTS API** control. The
 endpoint should accept:
@@ -207,6 +211,9 @@ Content-Type: application/json
 ```
 
 and return audio such as `audio/wav` or `audio/mpeg`.
+
+Switching TTS back to browser speech clears saved API endpoint, key, and custom
+voice settings so stale API configuration does not linger in browser mode.
 
 For local neural TTS, run the Uyghur MMS-TTS model:
 
@@ -240,7 +247,8 @@ Real access must be protected with Firebase Security Rules and Authentication.
 
 Core conversion, dictionary lookup, study tools, custom words, and recent
 history run in the browser. Custom words, history, theme mode, and TTS settings
-are stored locally in the user's browser storage.
+are stored locally in the user's browser storage. Stored values are normalized
+on load, and invalid entries are ignored instead of being restored into the UI.
 
 The app sends text to a network service only when a user configures or selects
 a TTS provider that requires an endpoint.
@@ -267,9 +275,9 @@ configured in [.firebaserc](.firebaserc).
 ## Testing
 
 The test suite covers converter behavior, round-trip expectations, IPA hints,
-alphabet data, dictionary search and shard loading, dictionary panel
-interactions, app conversion workflows, custom transliterations, history, and
-TTS settings.
+alphabet data, dictionary search and retryable shard loading, dictionary panel
+interactions, app conversion workflows, text input/output controls, custom
+transliterations, history, learning progress, speech controls, and TTS settings.
 
 ```bash
 npm test

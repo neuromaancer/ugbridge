@@ -38,4 +38,15 @@ describe('TTS settings', () => {
       }).voice,
     ).toBe(DEFAULT_TTS_VOICE);
   });
+
+  it('drops stale API settings when browser mode is selected', () => {
+    expect(
+      normalizeTtsSettings({
+        mode: 'browser',
+        endpoint: '/api/tts',
+        apiKey: 'sk-test',
+        voice: 'ug-CN-NasirNeural',
+      }),
+    ).toEqual(DEFAULT_TTS_SETTINGS);
+  });
 });

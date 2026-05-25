@@ -16,9 +16,14 @@ export function useTtsStatus(tts: TtsProvider) {
       };
     }
 
-    tts.hasUyghurVoice().then((value) => {
-      if (!cancelled) setHasUyghurVoice(value);
-    });
+    tts
+      .hasUyghurVoice()
+      .then((value) => {
+        if (!cancelled) setHasUyghurVoice(value);
+      })
+      .catch(() => {
+        if (!cancelled) setHasUyghurVoice(false);
+      });
 
     return () => {
       cancelled = true;

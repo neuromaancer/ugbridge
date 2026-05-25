@@ -59,12 +59,14 @@ export function normalizeTtsSettings(value: unknown): TtsSettings {
       ? record.voice.trim()
       : DEFAULT_TTS_VOICE;
 
-  const resolvedMode = endpoint && mode === 'api' ? 'api' : 'browser';
+  if (mode !== 'api' || !endpoint) {
+    return DEFAULT_TTS_SETTINGS;
+  }
 
   return {
-    mode: resolvedMode,
+    mode: 'api',
     endpoint,
-    apiKey: resolvedMode === 'api' ? apiKey : '',
+    apiKey,
     voice,
   };
 }

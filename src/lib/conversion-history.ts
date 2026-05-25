@@ -89,8 +89,14 @@ export function normalizeConversionHistory(
     if (!item || typeof item !== 'object') continue;
 
     const record = item as Partial<ConversionHistoryEntry>;
-    const direction =
-      record.direction === 'uly-to-uey' ? 'uly-to-uey' : 'uey-to-uly';
+    if (
+      record.direction !== 'uey-to-uly' &&
+      record.direction !== 'uly-to-uey'
+    ) {
+      continue;
+    }
+
+    const direction = record.direction;
     const input = typeof record.input === 'string' ? record.input.trim() : '';
     const output =
       typeof record.output === 'string' ? record.output.trim() : '';

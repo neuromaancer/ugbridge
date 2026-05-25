@@ -50,6 +50,9 @@ const LETTER_ORDER = [
 
 const DIGRAPH_ORDER = ['ch', 'sh', 'gh', 'ng', 'zh'];
 const LEARN_PROGRESS_KEY = 'ugbridge.learnedLetters.v1';
+const LEARNABLE_TOKENS = new Set(
+  ALPHABET_STUDY_ENTRIES.map((entry) => entry.token),
+);
 
 const LESSON_GROUPS = [
   {
@@ -474,9 +477,7 @@ function loadLearnedTokens() {
   try {
     const raw = window.localStorage.getItem(LEARN_PROGRESS_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed)
-      ? parsed.filter((token): token is string => typeof token === 'string')
-      : [];
+    return normalizeLearnedTokens(parsed);
   } catch {
     return [];
   }
@@ -484,5 +485,30 @@ function loadLearnedTokens() {
 
 function saveLearnedTokens(tokens: readonly string[]) {
   if (typeof window === 'undefined') return;
-  window.localStorage.setItem(LEARN_PROGRESS_KEY, JSON.stringify(tokens));
+  window.localStorage.setItem(
+    LEARN_PROGRESS_KEY,
+    JSON.stringify(normalizeLearnedTokens(tokens)),
+  );
+}
+
+function normalizeLearnedTokens(value: unknown) {
+  if (!Array.isArray(value)) return [];
+
+  const seen = new Set<string>();
+  const tokens: string[] = [];
+
+  for (const token of value) {
+    if (
+      typeof token !== 'string' ||
+      !LEARNABLE_TOKENS.has(token) ||
+      seen.has(token)
+    ) {
+      continue;
+    }
+
+    seen.add(token);
+    tokens.push(token);
+  }
+
+  return tokens;
 }

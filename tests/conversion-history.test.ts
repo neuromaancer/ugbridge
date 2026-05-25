@@ -9,6 +9,15 @@ describe('conversion history', () => {
   it('normalizes invalid stored values to an empty list', () => {
     expect(normalizeConversionHistory(null)).toEqual([]);
     expect(normalizeConversionHistory([{ input: 'salam' }])).toEqual([]);
+    expect(
+      normalizeConversionHistory([
+        {
+          direction: 'invalid',
+          input: 'salam',
+          output: 'سالام',
+        },
+      ]),
+    ).toEqual([]);
   });
 
   it('adds newest entries first', () => {

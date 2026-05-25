@@ -218,6 +218,80 @@ describe('loadStaticDictionaryEntries', () => {
     expect(fetchMock).toHaveBeenCalledWith('/dictionary/manifest.json');
   });
 
+  it('retries manifest loading after a transient failure', async () => {
+    const { loadStaticDictionaryEntries } = await importStaticDictionary();
+    const fetchMock = vi.fn(async (url: string) => {
+      if (
+        url === '/dictionary/manifest.json' &&
+        fetchMock.mock.calls.length === 1
+      ) {
+        return {
+          ok: false,
+          status: 500,
+        } as Response;
+      }
+
+      if (url === '/dictionary/manifest.json') {
+        return jsonResponse(testManifest());
+      }
+
+      return jsonResponse([['ياخشى', 'yaxshi', ['good']]]);
+    });
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    await expect(loadStaticDictionaryEntries('ياخشى', 'auto')).resolves.toEqual({
+      entries: [],
+      manifest: null,
+      loadedShardCount: 0,
+    });
+
+    const result = await loadStaticDictionaryEntries('ياخشى', 'auto');
+
+    expect(result.entries[0].uly).toBe('yaxshi');
+    expect(fetchMock).toHaveBeenCalledWith('/dictionary/manifest.json');
+    expect(fetchMock).toHaveBeenCalledWith('/dictionary/shards/uey-64a.json');
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+
+  it('retries shard loading after a transient failure', async () => {
+    const { loadStaticDictionaryEntries } = await importStaticDictionary();
+    const fetchMock = vi.fn(async (url: string) => {
+      if (url === '/dictionary/manifest.json') {
+        return jsonResponse(testManifest());
+      }
+
+      if (
+        url === '/dictionary/shards/uey-64a.json' &&
+        fetchMock.mock.calls.filter(
+          ([calledUrl]) => calledUrl === '/dictionary/shards/uey-64a.json',
+        ).length === 1
+      ) {
+        return {
+          ok: false,
+          status: 503,
+        } as Response;
+      }
+
+      return jsonResponse([['ياخشى', 'yaxshi', ['good']]]);
+    });
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    await expect(loadStaticDictionaryEntries('ياخشى', 'auto')).rejects.toThrow(
+      'Dictionary shard 503',
+    );
+
+    const result = await loadStaticDictionaryEntries('ياخشى', 'auto');
+
+    expect(result.entries[0].uly).toBe('yaxshi');
+    expect(
+      fetchMock.mock.calls.filter(
+        ([url]) => url === '/dictionary/shards/uey-64a.json',
+      ),
+    ).toHaveLength(2);
+  });
+
   it('caches manifest and shard fetches within the same loader instance', async () => {
     const { loadStaticDictionaryEntries } = await importStaticDictionary();
     const fetchMock = vi.fn(async (url: string) => {

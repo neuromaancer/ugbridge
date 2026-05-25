@@ -64,10 +64,15 @@ export async function loadStaticDictionaryManifest() {
 async function loadManifest() {
   manifestPromise ??= fetch(MANIFEST_URL)
     .then((response) => {
-      if (!response.ok) throw new Error(`Dictionary manifest ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`Dictionary manifest ${response.status}`);
+      }
       return response.json() as Promise<DictionaryManifest>;
     })
-    .catch(() => null);
+    .catch(() => {
+      manifestPromise = null;
+      return null;
+    });
 
   return manifestPromise;
 }
@@ -114,13 +119,21 @@ function loadShard(file: string) {
       if (!response.ok) throw new Error(`Dictionary shard ${response.status}`);
       return response.json() as Promise<CompactDictionaryEntry[]>;
     })
-    .then((entries) => entries.map(toDictionaryEntry));
+    .then((entries) => entries.map(toDictionaryEntry))
+    .catch((error: unknown) => {
+      shardCache.delete(url);
+      throw error;
+    });
 
   shardCache.set(url, promise);
   return promise;
 }
 
-function toDictionaryEntry([uey, uly, definitions]: CompactDictionaryEntry): DictionaryEntry {
+function toDictionaryEntry([
+  uey,
+  uly,
+  definitions,
+]: CompactDictionaryEntry): DictionaryEntry {
   return {
     id: `static-${hashEntry(uey)}`,
     uey,
