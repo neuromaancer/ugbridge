@@ -13,7 +13,6 @@ import {
   Languages,
   ListChecks,
   Moon,
-  Palette,
   Plus,
   Search,
   Share2,
@@ -781,7 +780,7 @@ function HomeCapabilityStrip() {
   return (
     <section
       aria-label="UG Bridge capabilities"
-      className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4"
+      className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3"
     >
       <CapabilityPill
         icon={<Database className="h-4 w-4" aria-hidden="true" />}
@@ -792,11 +791,6 @@ function HomeCapabilityStrip() {
         icon={<ShieldCheck className="h-4 w-4" aria-hidden="true" />}
         title="Local first"
         detail="History and custom words stay here"
-      />
-      <CapabilityPill
-        icon={<Palette className="h-4 w-4" aria-hidden="true" />}
-        title="System theme"
-        detail="System, day, and night modes"
       />
       <CapabilityPill
         icon={<Volume2 className="h-4 w-4" aria-hidden="true" />}
