@@ -893,14 +893,17 @@ function ThemeToggle({
     modes.findIndex((entry) => entry.value === mode),
     0,
   );
+  const activeMode = modes[activeIndex];
   const nextMode = modes[(activeIndex + 1) % modes.length];
+  const toggleLabel = `Theme mode: ${activeMode.label}. Switch to ${nextMode.label}.`;
 
   return (
     <button
       type="button"
       onClick={() => onChange(nextMode.value)}
-      aria-label={`Theme mode: ${modes[activeIndex].label}. Switch to ${nextMode.label}.`}
-      className="relative grid h-10 w-48 grid-cols-3 items-center overflow-hidden rounded-full border border-slate-200 bg-white p-1 text-xs font-semibold text-slate-500 shadow-xs transition hover:border-slate-300 hover:bg-slate-50"
+      aria-label={toggleLabel}
+      title={toggleLabel}
+      className="relative grid h-10 w-32 grid-cols-3 items-center overflow-hidden rounded-full border border-slate-200 bg-white p-1 text-slate-500 shadow-xs transition hover:border-slate-300 hover:bg-slate-50"
     >
       <span
         className="absolute inset-y-1 left-1 rounded-full bg-indigo-600 shadow-xs transition-transform duration-200 ease-out"
@@ -910,17 +913,16 @@ function ThemeToggle({
         }}
         aria-hidden="true"
       />
-      {modes.map(({ value, label, Icon }) => {
+      {modes.map(({ value, Icon }) => {
         const isActive = mode === value;
         return (
           <span
             key={value}
-            className={`relative z-10 inline-flex items-center justify-center gap-1 transition ${
+            className={`relative z-10 inline-flex items-center justify-center transition ${
               isActive ? 'text-white' : 'text-slate-500'
             }`}
           >
-            <Icon className="h-3.5 w-3.5" aria-hidden="true" />
-            {label}
+            <Icon className="h-4 w-4" aria-hidden="true" />
           </span>
         );
       })}
