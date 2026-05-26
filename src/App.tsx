@@ -12,6 +12,7 @@ import {
   Home,
   Languages,
   ListChecks,
+  Monitor,
   Moon,
   Plus,
   Search,
@@ -883,46 +884,47 @@ function ThemeToggle({
   mode: ThemeMode;
   onChange: (mode: ThemeMode) => void;
 }) {
-  const buttonClass = (value: ThemeMode) =>
-    `inline-flex min-w-18 items-center justify-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-      mode === value
-        ? 'bg-indigo-600 text-white shadow-xs'
-        : 'text-slate-600 hover:bg-slate-50'
-    }`;
+  const modes = [
+    { value: 'system', label: 'System', Icon: Monitor },
+    { value: 'light', label: 'Day', Icon: Sun },
+    { value: 'dark', label: 'Night', Icon: Moon },
+  ] as const;
+  const activeIndex = Math.max(
+    modes.findIndex((entry) => entry.value === mode),
+    0,
+  );
+  const nextMode = modes[(activeIndex + 1) % modes.length];
 
   return (
-    <div
-      className="grid grid-cols-3 rounded-full border border-slate-200 bg-white p-1 shadow-xs"
-      aria-label="Theme mode"
-      role="group"
+    <button
+      type="button"
+      onClick={() => onChange(nextMode.value)}
+      aria-label={`Theme mode: ${modes[activeIndex].label}. Switch to ${nextMode.label}.`}
+      className="relative grid h-10 w-48 grid-cols-3 items-center overflow-hidden rounded-full border border-slate-200 bg-white p-1 text-xs font-semibold text-slate-500 shadow-xs transition hover:border-slate-300 hover:bg-slate-50"
     >
-      <button
-        type="button"
-        onClick={() => onChange('system')}
-        aria-pressed={mode === 'system'}
-        className={buttonClass('system')}
-      >
-        System
-      </button>
-      <button
-        type="button"
-        onClick={() => onChange('light')}
-        aria-pressed={mode === 'light'}
-        className={buttonClass('light')}
-      >
-        <Sun className="h-3.5 w-3.5" aria-hidden="true" />
-        Day
-      </button>
-      <button
-        type="button"
-        onClick={() => onChange('dark')}
-        aria-pressed={mode === 'dark'}
-        className={buttonClass('dark')}
-      >
-        <Moon className="h-3.5 w-3.5" aria-hidden="true" />
-        Night
-      </button>
-    </div>
+      <span
+        className="absolute inset-y-1 left-1 rounded-full bg-indigo-600 shadow-xs transition-transform duration-200 ease-out"
+        style={{
+          width: 'calc((100% - 0.5rem) / 3)',
+          transform: `translateX(${activeIndex * 100}%)`,
+        }}
+        aria-hidden="true"
+      />
+      {modes.map(({ value, label, Icon }) => {
+        const isActive = mode === value;
+        return (
+          <span
+            key={value}
+            className={`relative z-10 inline-flex items-center justify-center gap-1 transition ${
+              isActive ? 'text-white' : 'text-slate-500'
+            }`}
+          >
+            <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+            {label}
+          </span>
+        );
+      })}
+    </button>
   );
 }
 

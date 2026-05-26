@@ -64,6 +64,21 @@ describe('App conversion workflow', () => {
       }),
     ).toBeInTheDocument();
   });
+
+  it('cycles theme mode with a single slider control', () => {
+    render(<App />);
+
+    const getThemeToggle = () =>
+      screen.getByRole('button', { name: /Theme mode:/i });
+
+    expect(getThemeToggle()).toHaveAccessibleName(/Theme mode: System/i);
+
+    fireEvent.click(getThemeToggle());
+    expect(getThemeToggle()).toHaveAccessibleName(/Theme mode: Day/i);
+
+    fireEvent.click(getThemeToggle());
+    expect(getThemeToggle()).toHaveAccessibleName(/Theme mode: Night/i);
+  });
 });
 
 function getConversionInput() {
