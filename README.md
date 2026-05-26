@@ -278,6 +278,8 @@ The test suite covers converter behavior, round-trip expectations, IPA hints,
 alphabet data, dictionary search and retryable shard loading, dictionary panel
 interactions, app conversion workflows, text input/output controls, custom
 transliterations, history, learning progress, speech controls, and TTS settings.
+Real-browser smoke checks are useful for deployed workflows and responsive
+navigation, especially clipboard, dictionary shard fetches, and mobile tab fit.
 
 ```bash
 npm test

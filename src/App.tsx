@@ -562,7 +562,7 @@ function AppTabs({
   onDictionary: () => void;
 }) {
   const tabClass = (view: View) =>
-    `inline-flex items-center justify-center gap-1 rounded-full px-1.5 py-2 text-[0.7rem] font-semibold transition sm:gap-1.5 sm:px-3 sm:text-sm ${
+    `inline-flex items-center justify-center gap-0.5 rounded-full px-0.5 py-2 text-[0.6rem] font-semibold transition sm:gap-1.5 sm:px-3 sm:text-sm ${
       activeView === view
         ? 'bg-indigo-600 text-white shadow-xs'
         : 'text-slate-600 hover:bg-slate-50'
