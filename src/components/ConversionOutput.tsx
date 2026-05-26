@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
+import { Copy, Search } from 'lucide-react';
 import type {
   ConversionTrace,
   ConversionSegment,
@@ -14,6 +15,8 @@ interface ConversionOutputProps {
   ipa?: string;
   trace?: ConversionTrace;
   actions?: ReactNode;
+  lookupWords?: string[];
+  onLookupWord?: (word: string) => void;
 }
 
 const CONFIG: Record<
@@ -51,6 +54,8 @@ export function ConversionOutput({
   ipa,
   trace,
   actions,
+  lookupWords = [],
+  onLookupWord,
 }: ConversionOutputProps) {
   const [copied, setCopied] = useState(false);
   const config = CONFIG[mode];
@@ -64,7 +69,7 @@ export function ConversionOutput({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex h-7 items-center justify-between">
+      <div className="flex min-h-7 flex-wrap items-center justify-between gap-2">
         <label
           htmlFor="text-output"
           className="text-sm font-semibold text-slate-700"
@@ -80,9 +85,10 @@ export function ConversionOutput({
             type="button"
             onClick={handleCopy}
             disabled={!value}
-            className="rounded-md px-2 py-0.5 text-xs font-medium text-indigo-600 transition hover:bg-indigo-50 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:bg-transparent"
+            className="inline-flex items-center gap-1 rounded-md bg-indigo-600 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
           >
-            {copied ? 'Copied!' : 'Copy'}
+            <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+            {copied ? 'Copied!' : 'Copy result'}
           </button>
         </div>
       </div>
@@ -100,7 +106,7 @@ export function ConversionOutput({
         id="text-output"
         dir={config.dir}
         lang={config.lang}
-        className="h-56 w-full overflow-auto whitespace-pre-wrap rounded-lg border border-slate-200 bg-slate-50/60 p-4 text-xl leading-relaxed text-slate-900 shadow-xs"
+        className="h-72 w-full overflow-auto whitespace-pre-wrap rounded-lg border border-slate-200 bg-slate-50/60 p-4 text-xl leading-relaxed text-slate-900 shadow-xs"
       >
         {mode === 'uey' && value ? (
           <div className="grid gap-4">
@@ -121,6 +127,28 @@ export function ConversionOutput({
           </span>
         )}
       </div>
+      {value && lookupWords.length > 0 && onLookupWord ? (
+        <div
+          aria-label="Dictionary lookup words"
+          className="flex flex-wrap items-center gap-1.5 text-xs"
+        >
+          <span className="inline-flex items-center gap-1 font-medium text-slate-400">
+            <Search className="h-3.5 w-3.5" aria-hidden="true" />
+            Tap word
+          </span>
+          {lookupWords.map((word) => (
+            <button
+              key={word}
+              type="button"
+              onClick={() => onLookupWord(word)}
+              className="rounded-full bg-white px-2.5 py-1 font-semibold text-slate-600 shadow-xs ring-1 ring-slate-200 transition hover:bg-indigo-50 hover:text-indigo-700 hover:ring-indigo-200"
+              aria-label={`Look up ${word} in dictionary`}
+            >
+              {word}
+            </button>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

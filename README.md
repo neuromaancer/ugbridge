@@ -43,7 +43,10 @@
 ## Features
 
 - **Convert UEY ⇄ ULY** with smart direction detection, colored segment
-  highlighting, IPA hints, copy/share actions, and `.txt` upload/download.
+  highlighting, IPA hints, long-text counters, conversion quality hints,
+  copy/share actions, shareable URLs, and `.txt` upload/download.
+- **Look up converted words inline** by tapping output word chips that open
+  dictionary results without leaving the conversion workspace.
 - **Inspect the letter bridge** from ULY to UEY, including per-segment mapping,
   word-initial hamza behavior, and Uyghur letter forms.
 - **Search offline dictionary data** by UEY, ULY, or English with suggestions

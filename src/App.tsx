@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import {
+  AlertTriangle,
   ArrowRight,
   BookOpenText,
   BookmarkPlus,
@@ -28,6 +29,7 @@ import {
 } from 'lucide-react';
 import {
   detectConversionDirection,
+  getConversionQualityHints,
   traceConversion,
   ulyToIpa,
 } from './lib/converter';
@@ -67,6 +69,7 @@ type View = 'home' | 'convert' | 'learn' | 'quiz' | 'alphabet' | 'dictionary';
 interface InitialState {
   direction: Direction;
   input: string;
+  lookupQuery: string;
   view: View;
 }
 
@@ -79,6 +82,7 @@ export default function App() {
   const [activeView, setActiveView] = useState<View>(initial.view);
   const [direction, setDirection] = useState<Direction>(initial.direction);
   const [input, setInput] = useState(initial.input);
+  const [lookupQuery, setLookupQuery] = useState(initial.lookupQuery);
   const [ttsSettings, setTtsSettings] =
     useState<TtsSettings>(loadTtsSettings);
   const [history, setHistory] = useState<ConversionHistoryEntry[]>(
@@ -123,6 +127,18 @@ export default function App() {
   const inputMode = activeDirection === 'uey-to-uly' ? 'uey' : 'uly';
   const outputMode = activeDirection === 'uey-to-uly' ? 'uly' : 'uey';
   const lineCount = input ? input.split(/\r\n|\r|\n/).length : 0;
+  const characterCount = input.length;
+  const lookupWords = useMemo(
+    () => getLookupWords(output, outputMode),
+    [output, outputMode],
+  );
+  const qualityHints = useMemo(
+    () =>
+      activeView === 'convert'
+        ? getConversionQualityHints(input, activeDirection, detectedDirection)
+        : [],
+    [activeDirection, activeView, detectedDirection, input],
+  );
   const showDetectedDirection =
     activeView === 'convert' &&
     detectedDirection.confidence === 'high' &&
@@ -178,6 +194,32 @@ export default function App() {
     }
   };
 
+  const clearInput = () => {
+    setInput('');
+    setLookupQuery('');
+    showNotice('Text cleared');
+  };
+
+  const pasteClipboardText = async () => {
+    if (!navigator.clipboard?.readText) {
+      showNotice('Clipboard paste unavailable');
+      return;
+    }
+
+    try {
+      const text = await navigator.clipboard.readText();
+      handleInputChange(text);
+      showNotice('Clipboard pasted');
+    } catch {
+      showNotice('Clipboard paste blocked');
+    }
+  };
+
+  const lookupOutputWord = (word: string) => {
+    setLookupQuery(word);
+    showNotice(`Looking up ${word}`);
+  };
+
   const copyText = async (text: string, label: string) => {
     if (!text) return;
     await navigator.clipboard.writeText(text);
@@ -187,9 +229,13 @@ export default function App() {
   const copyShareLink = async () => {
     const url = new URL(window.location.href);
     url.search = '';
-    url.searchParams.set('view', activeView);
+    url.searchParams.set(
+      'view',
+      hasTextWorkspaceActions && input ? 'convert' : activeView,
+    );
     url.searchParams.set('d', activeDirection);
-    if (input) url.searchParams.set('q', input);
+    if (input) url.searchParams.set('text', input);
+    if (lookupQuery) url.searchParams.set('lookup', lookupQuery);
     await navigator.clipboard.writeText(url.toString());
     showNotice('Share link copied');
   };
@@ -356,7 +402,7 @@ export default function App() {
             {(hasTextWorkspaceActions || activeView === 'dictionary') && (
               <button
                 type="button"
-                onClick={() => setInput('')}
+                onClick={clearInput}
                 disabled={!input}
                 className={BUTTON_CLASS}
               >
@@ -444,7 +490,10 @@ export default function App() {
           }}
         />
 
-        {(notice || lineCount > 1 || showDetectedDirection) && (
+        {(notice ||
+          lineCount > 1 ||
+          showDetectedDirection ||
+          qualityHints.length > 0) && (
           <div className="mb-4 flex flex-wrap items-center gap-2 text-xs">
             {notice && (
               <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700">
@@ -470,6 +519,24 @@ export default function App() {
                   : 'Detected ULY'}
               </button>
             )}
+            {qualityHints.map((hint) => (
+              <span
+                key={`${hint.level}-${hint.message}`}
+                title={hint.detail}
+                className={`inline-flex items-center gap-1 rounded-full px-3 py-1 font-medium ${
+                  hint.level === 'warning'
+                    ? 'bg-amber-50 text-amber-800 ring-1 ring-amber-200'
+                    : 'bg-sky-50 text-sky-700 ring-1 ring-sky-100'
+                }`}
+              >
+                {hint.level === 'warning' ? (
+                  <AlertTriangle className="h-3.5 w-3.5" aria-hidden="true" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                )}
+                {hint.message}
+              </span>
+            ))}
           </div>
         )}
 
@@ -503,14 +570,53 @@ export default function App() {
                 mode={inputMode}
                 value={input}
                 onChange={handleInputChange}
+                lineCount={lineCount}
+                characterCount={characterCount}
+                onClear={clearInput}
+                onPasteClipboard={pasteClipboardText}
               />
               <ConversionOutput
                 mode={outputMode}
                 value={output}
                 ipa={ipaText}
                 trace={trace}
+                lookupWords={lookupWords}
+                onLookupWord={lookupOutputWord}
               />
             </div>
+            {lookupQuery ? (
+              <section
+                aria-label="Inline dictionary lookup"
+                className="mt-6 grid gap-3"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="inline-flex max-w-full flex-wrap items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-xs ring-1 ring-slate-200">
+                    <Search
+                      className="h-4 w-4 text-indigo-600"
+                      aria-hidden="true"
+                    />
+                    Dictionary lookup:{' '}
+                    <span className="break-all text-indigo-700">
+                      {lookupQuery}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setLookupQuery('')}
+                    className="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium text-slate-500 transition hover:bg-slate-200"
+                  >
+                    <X className="h-4 w-4" aria-hidden="true" />
+                    Hide lookup
+                  </button>
+                </div>
+                <DictionaryPanel
+                  query={lookupQuery}
+                  onQueryChange={setLookupQuery}
+                  onStudy={studyDictionaryEntry}
+                  onConvert={convertDictionaryEntry}
+                />
+              </section>
+            ) : null}
             <HighlightLegend />
             <CustomTransliterationPanel
               entries={customEntries}
@@ -1140,9 +1246,29 @@ function LegendItem({
   );
 }
 
+function getLookupWords(text: string, mode: 'uey' | 'uly') {
+  const pattern =
+    mode === 'uey'
+      ? /[\u0600-\u06ff\u0750-\u077f]+/g
+      : /[A-Za-zéëöüÉËÖÜ]+/g;
+  const seen = new Set<string>();
+  const words: string[] = [];
+
+  for (const match of text.matchAll(pattern)) {
+    const word = match[0].trim();
+    const key = mode === 'uly' ? word.toLocaleLowerCase() : word;
+    if (word.length < 2 || seen.has(key)) continue;
+    seen.add(key);
+    words.push(word);
+    if (words.length >= 18) break;
+  }
+
+  return words;
+}
+
 function readInitialState(): InitialState {
   if (typeof window === 'undefined') {
-    return { direction: 'uey-to-uly', input: '', view: 'home' };
+    return { direction: 'uey-to-uly', input: '', lookupQuery: '', view: 'home' };
   }
 
   const params = new URLSearchParams(window.location.search);
@@ -1161,6 +1287,7 @@ function readInitialState(): InitialState {
   return {
     direction,
     view,
-    input: params.get('q') ?? '',
+    input: params.get('text') ?? params.get('q') ?? '',
+    lookupQuery: params.get('lookup') ?? '',
   };
 }

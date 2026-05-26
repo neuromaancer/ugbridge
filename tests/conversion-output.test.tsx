@@ -21,7 +21,9 @@ describe('ConversionOutput', () => {
   it('disables copying when there is no converted text', () => {
     render(<ConversionOutput mode="uly" value="" />);
 
-    expect(screen.getByRole('button', { name: 'Copy' })).toBeDisabled();
+    expect(
+      screen.getByRole('button', { name: 'Copy result' }),
+    ).toBeDisabled();
     expect(
       screen.getByText('Converted text will appear here…'),
     ).toBeInTheDocument();
@@ -31,7 +33,7 @@ describe('ConversionOutput', () => {
     render(<ConversionOutput mode="uly" value="salam" />);
 
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Copy' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Copy result' }));
     });
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('salam');
@@ -43,7 +45,9 @@ describe('ConversionOutput', () => {
       vi.advanceTimersByTime(1500);
     });
 
-    expect(screen.getByRole('button', { name: 'Copy' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Copy result' }),
+    ).toBeInTheDocument();
   });
 
   it('renders IPA hints when provided', () => {

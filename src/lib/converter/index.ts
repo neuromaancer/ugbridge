@@ -7,6 +7,10 @@ export {
   type DirectionDetection,
 } from './detect-direction';
 export {
+  getConversionQualityHints,
+  type ConversionQualityHint,
+} from './quality';
+export {
   traceConversion,
   traceUeyToUly,
   traceUlyToUey,
