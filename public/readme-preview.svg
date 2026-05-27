@@ -134,26 +134,26 @@
 
     <g transform="translate(52 484)">
       <g>
-        <rect width="288" height="48" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+        <rect width="180" height="48" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
         <rect x="12" y="10" width="28" height="28" rx="6" fill="#eef2ff"/>
         <path d="M21 18h10M21 24h10M21 30h10" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
         <text x="52" y="21" fill="#0f172a" font-size="14" font-weight="800">350k headwords</text>
-        <text x="52" y="36" fill="#64748b" font-size="12">Lazy dictionary shards</text>
+        <text x="52" y="36" fill="#64748b" font-size="12">Lazy dictionary data</text>
       </g>
-      <g transform="translate(306 0)">
-        <rect width="288" height="48" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+      <g transform="translate(196 0)">
+        <rect width="204" height="48" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
         <rect x="12" y="10" width="28" height="28" rx="6" fill="#ecfdf5"/>
         <path d="M20 25l5 5 11-14" fill="none" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
         <text x="52" y="21" fill="#0f172a" font-size="14" font-weight="800">Local first</text>
-        <text x="52" y="36" fill="#64748b" font-size="12">History and custom words stay here</text>
+        <text x="52" y="36" fill="#64748b" font-size="12">History stays on device</text>
       </g>
-      <g transform="translate(612 0)">
-        <rect width="288" height="48" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+      <g transform="translate(408 0)">
+        <rect width="182" height="48" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
         <rect x="12" y="10" width="28" height="28" rx="6" fill="#fef3c7"/>
         <path d="M20 28h4l6 5V15l-6 5h-4v8Z" fill="none" stroke="#d97706" stroke-width="2" stroke-linejoin="round"/>
         <path d="M34 20c2 2 2 6 0 8" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round"/>
         <text x="52" y="21" fill="#0f172a" font-size="14" font-weight="800">Speech ready</text>
-        <text x="52" y="36" fill="#64748b" font-size="12">Browser or custom TTS endpoint</text>
+        <text x="52" y="36" fill="#64748b" font-size="12">Browser/custom TTS</text>
       </g>
     </g>
   </g>
