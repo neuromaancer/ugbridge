@@ -667,18 +667,36 @@ function AppTabs({
   onAlphabet: () => void;
   onDictionary: () => void;
 }) {
+  const tabIndexByView: Partial<Record<View, number>> = {
+    convert: 0,
+    learn: 1,
+    quiz: 2,
+    alphabet: 3,
+    dictionary: 4,
+  };
+  const activeIndex = tabIndexByView[activeView];
   const tabClass = (view: View) =>
-    `inline-flex items-center justify-center gap-0.5 rounded-full px-0.5 py-2 text-[0.6rem] font-semibold transition sm:gap-1.5 sm:px-3 sm:text-sm ${
+    `relative z-10 inline-flex items-center justify-center gap-0.5 rounded-full px-0.5 py-2 text-[0.6rem] font-semibold transition-colors duration-200 sm:gap-1.5 sm:px-3 sm:text-sm ${
       activeView === view
-        ? 'bg-indigo-600 text-white shadow-xs'
+        ? 'text-white'
         : 'text-slate-600 hover:bg-slate-50'
     }`;
 
   return (
     <nav
       aria-label="Workspace"
-      className="grid w-full grid-cols-5 rounded-full border border-slate-200 bg-white p-1 shadow-xs md:w-176"
+      className="relative grid w-full grid-cols-5 overflow-hidden rounded-full border border-slate-200 bg-white p-1 shadow-xs md:w-176"
     >
+      {activeIndex !== undefined && (
+        <span
+          className="pointer-events-none absolute inset-y-1 left-1 rounded-full bg-indigo-600 shadow-xs transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+          style={{
+            width: 'calc((100% - 0.5rem) / 5)',
+            transform: `translateX(${activeIndex * 100}%)`,
+          }}
+          aria-hidden="true"
+        />
+      )}
       <button
         type="button"
         onClick={onConvert}
