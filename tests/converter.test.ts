@@ -57,11 +57,17 @@ describe('ueyToUly', () => {
   });
 
   describe('hamza handling', () => {
-    it('drops hamza before vowels', () => {
+    it('drops word-initial hamza before vowels', () => {
       expect(ueyToUly('ئا')).toBe('a');
       expect(ueyToUly('ئە')).toBe('e');
       expect(ueyToUly('ئۇ')).toBe('u');
       expect(ueyToUly('ئى')).toBe('i');
+    });
+
+    it('keeps in-word hamza as apostrophe', () => {
+      expect(ueyToUly('سائەت')).toBe("sa'et");
+      expect(ueyToUly('مۇئەللىم')).toBe("mu'ellim");
+      expect(ueyToUly('ئالما سائەت')).toBe("alma sa'et");
     });
   });
 

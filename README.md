@@ -141,7 +141,8 @@ events.
 
 - Character mapping lives in
   [src/lib/converter/mapping-table.ts](src/lib/converter/mapping-table.ts).
-- Hamza `ئ` is dropped as a vowel-onset marker.
+- Word-initial hamza `ئ` is dropped as a vowel carrier.
+- In-word hamza `ئ` converts to ULY apostrophe: `سائەت` → `sa'et`.
 - Arabic punctuation (`،` `؟` `؛`) converts to Latin punctuation.
 - Unknown characters pass through.
 - Forward conversion outputs canonical `é` for `ې`.
@@ -150,8 +151,9 @@ events.
 
 - Longest-match scan handles digraphs such as `sh`, `ch`, `gh`, `ng`, and `zh`.
 - Word-initial vowels receive hamza: `alma` → `ئالما`.
+- ULY apostrophe restores in-word hamza: `sa'et` → `سائەت`.
 - Adjacent vowels receive an internal hamza carrier when needed:
-  `saet` → `سائەت`.
+  `saet` → `سائەت` remains accepted for compatibility.
 - Case-insensitive input is accepted.
 - `ë` is accepted as a compatibility alias, but `é` is the canonical ULY form.
 - Latin punctuation (`,` `;` `?`) converts to Arabic punctuation.

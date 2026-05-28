@@ -93,6 +93,8 @@ export const ULY_VOWELS = new Set([
   'ë',
 ]);
 
+export const ULY_APOSTROPHES = new Set(["'", '’', '‘', 'ʼ']);
+
 export const LATIN_PUNCTUATION_TO_UEY: Record<string, string> = {
   ',': '،',
   ';': '؛',

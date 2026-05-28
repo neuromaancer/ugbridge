@@ -156,7 +156,7 @@ describe('ALPHABET_STUDY_ENTRIES', () => {
     expect(g?.examples.find((example) => example.uly === 'belge')?.english).toBe(
       'sign',
     );
-    expect(s?.examples.find((example) => example.uly === 'saet')?.uey).toBe(
+    expect(s?.examples.find((example) => example.uly === "sa'et")?.uey).toBe(
       'سائەت',
     );
   });

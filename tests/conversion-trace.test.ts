@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { traceUlyToUey } from '../src/lib/converter';
+import { traceUeyToUly, traceUlyToUey } from '../src/lib/converter';
 
 describe('conversion trace', () => {
   it('marks word-initial vowels with hamza', () => {
@@ -32,5 +32,31 @@ describe('conversion trace', () => {
       canonicalSource: 'é',
       output: 'ې',
     });
+  });
+
+  it('traces ULY apostrophe as in-word hamza', () => {
+    const trace = traceUlyToUey("sa'et");
+
+    expect(trace.output).toBe('سائەت');
+    expect(trace.segments).toContainEqual(
+      expect.objectContaining({
+        source: "'",
+        output: 'ئ',
+        kind: 'hamza',
+      }),
+    );
+  });
+
+  it('traces in-word hamza as ULY apostrophe', () => {
+    const trace = traceUeyToUly('سائەت');
+
+    expect(trace.output).toBe("sa'et");
+    expect(trace.segments).toContainEqual(
+      expect.objectContaining({
+        source: 'ئ',
+        output: "'",
+        kind: 'hamza',
+      }),
+    );
   });
 });

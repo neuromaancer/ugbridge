@@ -57,6 +57,12 @@ describe('ulyToUey', () => {
       expect(ulyToUey('muellim')).toBe('مۇئەللىم');
     });
 
+    it('converts ULY apostrophe to in-word hamza', () => {
+      expect(ulyToUey("sa'et")).toBe('سائەت');
+      expect(ulyToUey("mu'ellim")).toBe('مۇئەللىم');
+      expect(ulyToUey('sa’et')).toBe('سائەت');
+    });
+
     it('does not prepend hamza when word starts with a consonant', () => {
       expect(ulyToUey('men')).toBe('مەن');
       expect(ulyToUey('bala')).toBe('بالا');
@@ -154,6 +160,8 @@ describe('round-trip: ueyToUly → ulyToUey', () => {
     'ئۇيغۇرچە',
     'كىتاب',
     'ئالما',
+    'سائەت',
+    'مۇئەللىم',
     'ياخشىمۇسىز',
     'چاي',
     'مەكتەپ',

@@ -4,6 +4,7 @@ import {
   UEY_TO_ULY,
   ULY_TO_UEY_DIGRAPHS,
   ULY_TO_UEY_LETTERS,
+  ULY_APOSTROPHES,
   ULY_VOWELS,
   WORD_INITIAL_HAMZA,
 } from './mapping-table';
@@ -110,6 +111,24 @@ export function traceUlyToUey(input: string): ConversionTrace {
       continue;
     }
 
+    if (ULY_APOSTROPHES.has(source)) {
+      output += WORD_INITIAL_HAMZA;
+      segments.push({
+        id: `${sourceIndex}-${outputIndex}`,
+        source,
+        output: WORD_INITIAL_HAMZA,
+        kind: 'hamza',
+        sourceIndex,
+        outputIndex,
+        canonicalSource: "'",
+        note: "Apostrophe marks an in-word hamza in ULY.",
+      });
+      i += 1;
+      atWordStart = false;
+      previousWasVowel = false;
+      continue;
+    }
+
     if (oneChar in LATIN_PUNCTUATION_TO_UEY) {
       const mapped = LATIN_PUNCTUATION_TO_UEY[oneChar];
       output += mapped;
@@ -148,11 +167,27 @@ export function traceUeyToUly(input: string): ConversionTrace {
   const segments: ConversionSegment[] = [];
   let output = '';
   let sourceIndex = 0;
+  let atWordStart = true;
 
   for (const source of input) {
     const outputIndex = output.length;
 
-    if (source in UEY_TO_ULY) {
+    if (source === WORD_INITIAL_HAMZA) {
+      const mapped = atWordStart ? '' : "'";
+      output += mapped;
+      segments.push({
+        id: `${sourceIndex}-${outputIndex}`,
+        source,
+        output: mapped,
+        kind: 'hamza',
+        sourceIndex,
+        outputIndex,
+        note: atWordStart
+          ? 'Word-initial hamza is a vowel carrier and is not written in ULY.'
+          : "In-word hamza is written as apostrophe in ULY.",
+      });
+      atWordStart = false;
+    } else if (source in UEY_TO_ULY) {
       const mapped = UEY_TO_ULY[source];
       output += mapped;
       segments.push({
@@ -160,20 +195,15 @@ export function traceUeyToUly(input: string): ConversionTrace {
         source,
         output: mapped,
         kind:
-          source === WORD_INITIAL_HAMZA
-            ? 'hamza'
-            : mapped.length > 1
-              ? 'digraph'
-              : ULY_VOWELS.has(mapped)
-                ? 'vowel'
-                : 'letter',
+          mapped.length > 1
+            ? 'digraph'
+            : ULY_VOWELS.has(mapped)
+              ? 'vowel'
+              : 'letter',
         sourceIndex,
         outputIndex,
-        note:
-          source === WORD_INITIAL_HAMZA
-            ? 'Hamza marks a word-initial vowel and is not written in ULY.'
-            : undefined,
       });
+      atWordStart = false;
     } else if (source in UEY_PUNCTUATION_TO_LATIN) {
       const mapped = UEY_PUNCTUATION_TO_LATIN[source];
       output += mapped;
@@ -185,16 +215,20 @@ export function traceUeyToUly(input: string): ConversionTrace {
         sourceIndex,
         outputIndex,
       });
+      atWordStart = true;
     } else {
       output += source;
+      const isSpace = /\s/.test(source);
+      const isBoundary = isSpace || /[.,;:!?()[\]{}"“”'‘’ʼ-]/.test(source);
       segments.push({
         id: `${sourceIndex}-${outputIndex}`,
         source,
         output: source,
-        kind: /\s/.test(source) ? 'space' : 'passthrough',
+        kind: isSpace ? 'space' : 'passthrough',
         sourceIndex,
         outputIndex,
       });
+      atWordStart = isBoundary;
     }
 
     sourceIndex += source.length;
