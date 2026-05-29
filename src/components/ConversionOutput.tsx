@@ -68,7 +68,7 @@ export function ConversionOutput({
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="min-w-0 flex flex-col gap-2">
       <div className="flex min-h-7 flex-wrap items-center justify-between gap-2">
         <label
           htmlFor="text-output"

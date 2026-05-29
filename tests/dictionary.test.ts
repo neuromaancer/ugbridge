@@ -105,6 +105,35 @@ describe('suggestDictionary', () => {
     expect(suggestion.matchedOn).toBe('definition');
   });
 
+  it('dedupes repeated suggestion values across entries', () => {
+    const suggestions = suggestDictionary('apple', [
+      {
+        id: 'plain',
+        uey: 'ئالما',
+        uly: 'alma',
+        ipa: '',
+        partOfSpeech: 'noun',
+        definitions: ['apple'],
+      },
+      {
+        id: 'tree',
+        uey: 'ئالما دەرىخى',
+        uly: 'alma derixi',
+        ipa: '',
+        partOfSpeech: 'noun',
+        definitions: ['apple', 'apple tree'],
+      },
+    ]);
+
+    expect(
+      suggestions.filter(
+        (suggestion) =>
+          suggestion.matchedOn === 'definition' &&
+          suggestion.value === 'apple',
+      ),
+    ).toHaveLength(1);
+  });
+
   it('can limit suggestions to English definitions', () => {
     const [suggestion] = suggestDictionary('goo', undefined, 'english');
     expect(suggestion.value).toBe('good');
@@ -179,6 +208,27 @@ describe('loadStaticDictionaryEntries', () => {
     expect(fetchMock).toHaveBeenCalledWith('/dictionary/shards/english-e.json');
     expect(fetchMock).toHaveBeenCalledWith('/dictionary/shards/uly-e.json');
     expect(fetchMock).not.toHaveBeenCalledWith('/dictionary/shards/uey-64a.json');
+  });
+
+  it('builds stable unique ids from the full static entry payload', async () => {
+    const { loadStaticDictionaryEntries } = await importStaticDictionary();
+    const fetchMock = vi.fn(async (url: string) => {
+      if (url === '/dictionary/manifest.json') {
+        return jsonResponse(testManifest());
+      }
+
+      return jsonResponse([
+        ['موللاق', 'mollaq', ['a somersault', 'head-over-heels']],
+        ['مونچاق', 'monchaq', ['necklace', 'torque', 'a pearl']],
+      ]);
+    });
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    const result = await loadStaticDictionaryEntries('e', 'english');
+
+    expect(result.entries.map((entry) => entry.id)).toHaveLength(2);
+    expect(new Set(result.entries.map((entry) => entry.id))).toHaveLength(2);
   });
 
   it('keeps empty queries to manifest loading only', async () => {

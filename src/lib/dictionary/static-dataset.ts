@@ -134,8 +134,10 @@ function toDictionaryEntry([
   uly,
   definitions,
 ]: CompactDictionaryEntry): DictionaryEntry {
+  const identity = `${uey}\u0000${uly}\u0000${definitions.join('\u0000')}`;
+
   return {
-    id: `static-${hashEntry(uey)}`,
+    id: `static-${hashEntry(identity)}`,
     uey,
     uly,
     ipa: '',

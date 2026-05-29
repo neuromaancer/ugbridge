@@ -34,7 +34,7 @@ export function suggestDictionary(
   const unique: DictionarySuggestion[] = [];
 
   for (const suggestion of suggestions) {
-    const key = `${suggestion.entry.id}:${suggestion.value.toLocaleLowerCase()}`;
+    const key = `${suggestion.matchedOn}:${normalizeQuery(suggestion.value)}`;
     if (seen.has(key)) continue;
     seen.add(key);
     unique.push(suggestion);
