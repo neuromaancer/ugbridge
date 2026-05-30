@@ -13,6 +13,7 @@ import {
   Home,
   Languages,
   ListChecks,
+  MessageCircleQuestion,
   Monitor,
   Moon,
   Plus,
@@ -76,7 +77,7 @@ interface InitialState {
 const BUTTON_CLASS =
   'inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-xs transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50';
 const FOOTER_LINK_CLASS =
-  'inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-xs transition hover:border-slate-300 hover:bg-slate-50';
+  'inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-xs transition hover:border-slate-300 hover:bg-slate-50';
 
 export default function App() {
   const initial = useMemo(readInitialState, []);
@@ -845,8 +846,10 @@ function HomeFooter() {
   return (
     <footer className="mt-2 grid gap-4 border-t border-slate-200 py-5 text-sm text-slate-500 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
       <div className="grid gap-2">
-        <p className="font-semibold text-slate-700">
-          UG Bridge © 2026 Alafate
+        <p className="font-semibold text-slate-700">UG Bridge © 2026</p>
+        <p className="inline-flex items-center gap-2 font-semibold text-slate-700">
+          <AlertTriangle className="size-4 text-amber-600" aria-hidden="true" />
+          Disclaimer
         </p>
         <p className="max-w-3xl leading-6">
           UG Bridge is a best-effort tool for transliteration, dictionary
@@ -862,11 +865,12 @@ function HomeFooter() {
 
       <div className="flex flex-wrap gap-2 md:justify-end">
         <a
-          href="https://github.com/neuromaancer"
+          href="https://github.com/neuromaancer/ugbridge/issues/new"
           target="_blank"
           rel="noreferrer"
           className={FOOTER_LINK_CLASS}
         >
+          <MessageCircleQuestion className="size-4" aria-hidden="true" />
           Contact
         </a>
         <a
@@ -875,6 +879,7 @@ function HomeFooter() {
           rel="noreferrer"
           className={FOOTER_LINK_CLASS}
         >
+          <ShieldCheck className="size-4" aria-hidden="true" />
           GPLv3 license
         </a>
         <a
@@ -883,6 +888,7 @@ function HomeFooter() {
           rel="noreferrer"
           className={FOOTER_LINK_CLASS}
         >
+          <Database className="size-4" aria-hidden="true" />
           Dictionary source
         </a>
       </div>
