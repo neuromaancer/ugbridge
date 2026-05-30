@@ -1,5 +1,23 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'UKIJ Ekran Web';
+  src: url('/fonts/ukij-ekran.woff2') format('woff2');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  unicode-range:
+    U+0020-007E,
+    U+0600-06FF,
+    U+0750-077F,
+    U+08A0-08FF,
+    U+FB50-FDFF,
+    U+FE70-FEFF,
+    U+200C-200F,
+    U+202A-202E,
+    U+2066-2069;
+}
+
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -30,6 +48,16 @@ body {
     -apple-system,
     'Segoe UI',
     Roboto,
+    sans-serif;
+}
+
+:lang(ug) {
+  font-family:
+    'UKIJ Ekran Web',
+    'UKIJ Ekran',
+    'Noto Naskh Arabic',
+    'Noto Sans Arabic',
+    system-ui,
     sans-serif;
 }
 

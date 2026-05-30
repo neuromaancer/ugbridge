@@ -56,6 +56,8 @@
 - **Customize local workflows** with browser-local custom words, recent
   conversions, ULY input helpers, system/day/night theme settings, and
   installable PWA shell caching.
+- **Render UEY consistently** with a bundled UKIJ Ekran webfont for Uyghur
+  Arabic script text.
 - **Surface basic project information** with a homepage disclaimer, contact
   link, copyright year, GPLv3 source license note, and dictionary data
   attribution.
@@ -121,6 +123,7 @@ src/
 tests/                       # Vitest specs
 public/
 ├── dictionary/              # generated static dictionary shards
+├── fonts/                   # bundled webfont assets and attribution
 ├── manifest.webmanifest
 ├── icon.svg
 └── sw.js
@@ -196,6 +199,14 @@ Current generated size:
 
 - about 350k Uyghur headwords
 - about 725k English definitions
+
+## Fonts
+
+UEY text uses a bundled `UKIJ Ekran` webfont subset from the
+[UKIJ Uyghur Unicode fonts page](https://ukij.org/fonts/) so Uyghur Arabic
+script renders consistently across operating systems. The UKIJ page states that
+its fonts are distributed under LGPL and SIL Open Font License terms.
+Attribution details live in [public/fonts/README.md](public/fonts/README.md).
 
 ## Text To Speech
 
