@@ -91,6 +91,10 @@ Dictionary view uses the same `input` state as its search query. Search logic li
 
 When adding a provider, implement `TtsProvider` in [src/lib/tts/types.ts](src/lib/tts/types.ts) and update `getTtsProvider()` in [src/lib/tts/index.ts](src/lib/tts/index.ts). Do not bypass the interface. Always feed TTS providers UEY Arabic text, never ULY.
 
+## Licensing
+
+Application source is under GNU GPL v3.0 only (`GPL-3.0-only`). Keep homepage/README license text clear that redistributed modified versions must remain GPLv3 and include source code; do not describe GPLv3 as a commercial-use ban. Dictionary shards retain Apache-2.0 dataset attribution.
+
 ## Deployment
 
 - Firebase Hosting via `npm run deploy`, project `ugbr1dge`, configured in [.firebaserc](.firebaserc).

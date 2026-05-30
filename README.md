@@ -22,7 +22,7 @@
   <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss&logoColor=ffffff">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=ffffff">
   <img alt="Firebase Hosting" src="https://img.shields.io/badge/Firebase-Hosting-FFCA28?logo=firebase&logoColor=111827">
-  <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-10B981">
+  <img alt="License GPLv3" src="https://img.shields.io/badge/license-GPLv3-10B981">
 </p>
 
 <p align="center">
@@ -56,6 +56,9 @@
 - **Customize local workflows** with browser-local custom words, recent
   conversions, ULY input helpers, system/day/night theme settings, and
   installable PWA shell caching.
+- **Surface basic project information** with a homepage disclaimer, contact
+  link, copyright year, GPLv3 source license note, and dictionary data
+  attribution.
 - **Speak UEY text** through browser speech, local MMS, Hugging Face
   Space-style proxy, or a custom TTS endpoint.
 
@@ -294,7 +297,10 @@ npm run build
 
 ## License
 
-Application code is released under the MIT License. See [LICENSE](LICENSE).
+Application source is licensed under the
+[GNU General Public License v3.0 only](LICENSE) (`GPL-3.0-only`).
+Redistributed modified versions must remain under GPLv3 and include source
+code. GPLv3 does not prohibit commercial use by itself.
 
 The generated dictionary shards in `public/dictionary/` are derived from the
 Apache-2.0 [`anke01/uyghur-dictionary-dataset`](https://huggingface.co/datasets/anke01/uyghur-dictionary-dataset).

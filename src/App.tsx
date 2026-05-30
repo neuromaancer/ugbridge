@@ -75,6 +75,8 @@ interface InitialState {
 
 const BUTTON_CLASS =
   'inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-xs transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50';
+const FOOTER_LINK_CLASS =
+  'inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-xs transition hover:border-slate-300 hover:bg-slate-50';
 
 export default function App() {
   const initial = useMemo(readInitialState, []);
@@ -833,7 +835,58 @@ function HomePanel({
           onClick={onAlphabet}
         />
       </section>
+
+      <HomeFooter />
     </main>
+  );
+}
+
+function HomeFooter() {
+  return (
+    <footer className="mt-2 grid gap-4 border-t border-slate-200 py-5 text-sm text-slate-500 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
+      <div className="grid gap-2">
+        <p className="font-semibold text-slate-700">
+          UG Bridge © 2026 Alafate
+        </p>
+        <p className="max-w-3xl leading-6">
+          UG Bridge is a best-effort tool for transliteration, dictionary
+          lookup, script study, and speech experiments. Verify important
+          academic, legal, medical, or official use with qualified sources.
+        </p>
+        <p className="max-w-3xl leading-6">
+          App source is licensed under GPLv3, so redistributed modified
+          versions must remain GPLv3 and include source code. Dictionary data is
+          derived from an Apache-2.0 Uyghur-English dataset.
+        </p>
+      </div>
+
+      <div className="flex flex-wrap gap-2 md:justify-end">
+        <a
+          href="https://github.com/neuromaancer"
+          target="_blank"
+          rel="noreferrer"
+          className={FOOTER_LINK_CLASS}
+        >
+          Contact
+        </a>
+        <a
+          href="https://www.gnu.org/licenses/gpl-3.0.html"
+          target="_blank"
+          rel="noreferrer"
+          className={FOOTER_LINK_CLASS}
+        >
+          GPLv3 license
+        </a>
+        <a
+          href="https://huggingface.co/datasets/anke01/uyghur-dictionary-dataset"
+          target="_blank"
+          rel="noreferrer"
+          className={FOOTER_LINK_CLASS}
+        >
+          Dictionary source
+        </a>
+      </div>
+    </footer>
   );
 }
 
