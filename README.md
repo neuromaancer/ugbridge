@@ -51,8 +51,8 @@
   word-initial hamza behavior, and Uyghur letter forms.
 - **Search offline dictionary data** by UEY, ULY, or English with suggestions
   and lazy-loaded static shards.
-- **Study and practice UEY** through alphabet pages, examples, joining forms,
-  and a quiz covering all 32 sounds.
+- **Study and practice UEY** through alphabet pages, connected highlighted
+  examples, joining forms, and a quiz covering all 32 sounds.
 - **Customize local workflows** with browser-local custom words, recent
   conversions, ULY input helpers, system/day/night theme settings, and
   installable PWA shell caching.

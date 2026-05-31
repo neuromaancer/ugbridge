@@ -215,6 +215,8 @@ function AlphabetExampleRow({
 }: {
   example: AlphabetStudyExample;
 }) {
+  const segments = buildExampleSegments(example);
+
   return (
     <div className="grid gap-2 rounded-md bg-white p-3 ring-1 ring-slate-200">
       <div className="flex items-center justify-between gap-3">
@@ -240,21 +242,21 @@ function AlphabetExampleRow({
         </span>
       </div>
       <div dir="rtl" lang="ug" className="text-3xl leading-relaxed text-slate-800">
-        {example.displayGlyphs.map((glyph, index) => (
+        {segments.map((segment) => (
           <span
-            key={`${example.id}-${index}`}
+            key={`${example.id}-${segment.startIndex}`}
             className={
-              example.highlightIndexes.includes(index)
+              segment.highlighted
                 ? 'rounded-sm bg-amber-200 px-1 text-amber-950'
                 : undefined
             }
             title={
-              example.highlightIndexes.includes(index)
+              segment.highlighted
                 ? `${labelText(example.label)}: ${example.highlightGlyph}`
                 : undefined
             }
           >
-            {glyph}
+            {segment.text}
           </span>
         ))}
       </div>
@@ -266,6 +268,37 @@ function AlphabetExampleRow({
       </div>
     </div>
   );
+}
+
+type AlphabetExampleSegment = {
+  startIndex: number;
+  highlighted: boolean;
+  text: string;
+};
+
+function buildExampleSegments(
+  example: AlphabetStudyExample,
+): AlphabetExampleSegment[] {
+  const highlightIndexes = new Set(example.highlightIndexes);
+  const segments: AlphabetExampleSegment[] = [];
+
+  example.displayGlyphs.forEach((glyph, index) => {
+    const highlighted = highlightIndexes.has(index);
+    const previous = segments[segments.length - 1];
+
+    if (previous?.highlighted === highlighted) {
+      previous.text += glyph;
+      return;
+    }
+
+    segments.push({
+      startIndex: index,
+      highlighted,
+      text: glyph,
+    });
+  });
+
+  return segments;
 }
 
 function labelText(label: AlphabetExampleLabel) {
